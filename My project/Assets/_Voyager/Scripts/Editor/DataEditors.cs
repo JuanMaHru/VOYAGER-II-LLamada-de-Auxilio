@@ -32,14 +32,18 @@ namespace Voyager.EditorTools
         {
             string folder = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(db)).Replace('\\', '/');
             Undo.RecordObject(db, "Buscar propuestas");
-            db.proposals = AssetDatabase.FindAssets("t:ProposalData", new[] { folder })
+            db.proposals = FindProposalsIn(folder);
+            EditorUtility.SetDirty(db);
+            AssetDatabase.SaveAssetIfDirty(db);
+            Debug.Log($"[Voyager] ProposalDatabase: {db.proposals.Count} propuestas encontradas en {folder}/.");
+        }
+
+        public static System.Collections.Generic.List<ProposalData> FindProposalsIn(string folder)
+            => AssetDatabase.FindAssets("t:ProposalData", new[] { folder })
                 .Select(g => AssetDatabase.LoadAssetAtPath<ProposalData>(AssetDatabase.GUIDToAssetPath(g)))
                 .Where(p => p != null)
                 .OrderBy(p => p.CategoryName).ThenBy(p => p.RegionName).ThenBy(p => p.name)
                 .ToList();
-            EditorUtility.SetDirty(db);
-            Debug.Log($"[Voyager] ProposalDatabase: {db.proposals.Count} propuestas encontradas en {folder}/.");
-        }
     }
 
     /// <summary>CampaignConfig: botón de validación.</summary>

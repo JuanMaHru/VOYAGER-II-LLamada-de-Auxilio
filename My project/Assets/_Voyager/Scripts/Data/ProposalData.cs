@@ -19,6 +19,10 @@ namespace Voyager
         [Tooltip("Texto opcional para eventos especiales (la UI decide cómo mostrarlo).")]
         [TextArea] public string specialEventText;
 
+        [Tooltip("Qué hacen los alienígenas cuando encuentran esta propuesta en la sonda. " +
+                 "Se muestra en la pantalla final si fue aprobada. Se carga desde Reacciones.txt.")]
+        [TextArea] public string alienReaction;
+
         [Header("Efectos")]
         [Tooltip("Qué pasa al APROBAR. Ej: Modificar región Europa +10, Modificar stat Culture +5.")]
         public List<Consequence> onApprove = new List<Consequence>();

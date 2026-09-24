@@ -36,6 +36,8 @@ namespace Voyager.EditorTools
                 TestCriticalThreshold(config);
                 TestNoRepeatsAndRandomSimulation(config);
                 TestRequirementsAndClamp(config);
+                TestGeneratedConditionsAlwaysFeasible(config);
+                TestImmediateEndAndProposalRequirements(config);
             }
             finally { GameLog.Enabled = logs; }
             Finish();
@@ -47,12 +49,13 @@ namespace Voyager.EditorTools
             var (cm, go) = Build(config);
             cm.StartNewCampaign();
             Check(cm.Proposals.Proposals.Count == 5, "El día genera 5 propuestas");
-            Decide(cm, ("P_Novena_Sinfonia", true), ("P_Raga", true), ("P_Rock_Argentino", false), ("P_Kpop", false), ("P_Flamenco", false));
+            Decide(cm, ("P_Novena_Sinfonia", true), ("P_Raga", true), ("P_Rock_Argentino", false), ("P_Kpop", false), ("P_Michael_Jackson", false));
             Check(cm.Phase == CampaignPhase.DayEnded, "El día se cierra solo al decidir la última propuesta");
             Check(cm.LastDayResult.conditionMet, "Aprobar 2 / Rechazar 3 → condición cumplida");
             Check(Stat(cm, "Culture") == 9, $"Culture = 5 + 4 = 9 (es {Stat(cm, "Culture")})");
             Check(Stat(cm, "Diplomacy") == 5, $"Diplomacy = 2 + 3 (bonus condición) = 5 (es {Stat(cm, "Diplomacy")})");
-            Check(Rel(cm, "Europa") == 4, $"Europa = +10 - 6 = 4 (es {Rel(cm, "Europa")})");
+            Check(Rel(cm, "Europa") == 10, $"Europa = +10 (es {Rel(cm, "Europa")})");
+            Check(Rel(cm, "EEUU") == -10, $"EEUU = -10 por rechazar a Michael Jackson (es {Rel(cm, "EEUU")})");
             cm.NextDay();
             Check(cm.Phase == CampaignPhase.Finished, "Tras el último día, NextDay muestra el final");
             Check(cm.FinalEnding != null && cm.FinalEnding.name == "E_Mensaje_Humanidad", "Final = 'El mensaje de la humanidad'");
@@ -63,14 +66,14 @@ namespace Voyager.EditorTools
         {
             var (cm, go) = Build(config);
             cm.StartNewCampaign();
-            Decide(cm, ("P_Novena_Sinfonia", true), ("P_Raga", true), ("P_Rock_Argentino", true), ("P_Kpop", true), ("P_Flamenco", true));
+            Decide(cm, ("P_Novena_Sinfonia", true), ("P_Raga", true), ("P_Rock_Argentino", true), ("P_Kpop", true), ("P_Michael_Jackson", true));
             Check(!cm.LastDayResult.conditionMet, "Aprobar 5 → condición incumplida");
             Check(Rel(cm, "Asia") == 13, $"Asia = 10 + 8 - 5 (castigo) = 13 (es {Rel(cm, "Asia")})");
             Check(cm.LastDayResult.narratives.Count == 1, "La falla genera 1 texto narrativo de cierre");
             Check(cm.State.ConditionsFailed == 1, "Se cuenta 1 condición fallida");
             cm.NextDay();
             Check(cm.FinalEnding != null && cm.FinalEnding.name == "E_Silencio",
-                  "Culture 17 pero Diplomacy 2 → no cumple AND → final por defecto");
+                  "Culture 18 pero Diplomacy 2 → no cumple AND → final por defecto");
             Object.DestroyImmediate(go);
         }
 
@@ -81,11 +84,11 @@ namespace Voyager.EditorTools
             cm.OnNarrative += _ => narratives++;
             cm.StartNewCampaign();
             narratives = 0; // ignorar el texto de intro
-            Decide(cm, ("P_Novena_Sinfonia", false), ("P_Flamenco", false), ("P_Raga", true), ("P_Kpop", true), ("P_Rock_Argentino", false));
-            Check(Rel(cm, "Europa") == -16, $"Europa = -10 - 6 = -16 (es {Rel(cm, "Europa")})");
+            Decide(cm, ("P_Novena_Sinfonia", false), ("P_Michael_Jackson", false), ("P_Raga", true), ("P_Kpop", true), ("P_Rock_Argentino", false));
+            Check(Rel(cm, "Europa") == -10, $"Europa = -10, justo en su límite crítico (es {Rel(cm, "Europa")})");
             Check(cm.State.HasFlag("europa_ofendida"), "Cruzar el límite crítico activa el flag");
             Check(Stat(cm, "Diplomacy") == -5 + 3, $"Diplomacy = -5 (crítico) + 3 (condición) = -2 (es {Stat(cm, "Diplomacy")})");
-            Check(narratives == 2, $"2 narrativas durante el día: Flamenco + crítico de Europa (fueron {narratives})");
+            Check(narratives == 2, $"2 narrativas durante el día: rechazo a Michael Jackson + crítico de Europa (fueron {narratives})");
             cm.Debug_ModifyRegion(Region(cm, "Europa"), -10);
             Check(Stat(cm, "Diplomacy") == -2, "Bajar más allá del límite NO vuelve a disparar la consecuencia");
             Object.DestroyImmediate(go);
@@ -133,6 +136,114 @@ namespace Voyager.EditorTools
             group.mode = LogicMode.All;
             Check(!group.Evaluate(cm.State), "Grupo AND: falla si uno no se cumple");
             Object.DestroyImmediate(go);
+        }
+
+        /// <summary>
+        /// Genera miles de días al azar (1 a 6 propuestas, regiones repetidas o ausentes) y prueba
+        /// TODAS las combinaciones de aprobar/rechazar: al menos una tiene que cumplir la condición.
+        /// </summary>
+        static void TestGeneratedConditionsAlwaysFeasible(CampaignConfig config)
+        {
+            var rng = new System.Random(7);
+            var settings = new ConditionGeneratorSettings { demandChance = 1f, maxDemands = 3 };
+            var regions = config.regions;
+            int impossible = 0, withDemands = 0, badTotals = 0;
+
+            for (int trial = 0; trial < 2000; trial++)
+            {
+                int n = 1 + rng.Next(6);
+                var proposals = new List<ProposalData>();
+                for (int i = 0; i < n; i++)
+                {
+                    var p = ScriptableObject.CreateInstance<ProposalData>();
+                    p.name = $"T{i}";
+                    p.region = regions[rng.Next(regions.Count)];
+                    proposals.Add(p);
+                }
+                settings.demandChance = (float)rng.NextDouble();
+                var cond = ConditionGenerator.Generate(proposals, regions, settings, rng, 1);
+                if (cond.regionDemands.Count > 0) withDemands++;
+
+                int a = cond.requirements.requirements[0].value, r = cond.requirements.requirements[1].value;
+                if (a + r != n) badTotals++;
+
+                bool feasible = false;
+                for (int mask = 0; mask < (1 << n) && !feasible; mask++)
+                {
+                    var state = new GameState(config);
+                    state.BeginDay(1);
+                    for (int i = 0; i < n; i++) state.RecordDecision(proposals[i], (mask & (1 << i)) != 0);
+                    feasible = cond.IsMet(state);
+                }
+                if (!feasible) impossible++;
+
+                Object.DestroyImmediate(cond);
+                foreach (var p in proposals) Object.DestroyImmediate(p);
+            }
+            Check(impossible == 0, $"Condiciones generadas: todas cumplibles (imposibles: {impossible} de 2000)");
+            Check(badTotals == 0, "Condiciones generadas: aprobar + rechazar = total de propuestas");
+            Check(withDemands > 0, "Condiciones generadas: algunas incluyen exigencias de regiones");
+        }
+
+        /// <summary>
+        /// Una variable con límite crítico + EndCampaign inmediato termina la partida EN EL MOMENTO
+        /// (sin esperar al cierre del día). Y los requisitos "aprobaste X" funcionan.
+        /// </summary>
+        static void TestImmediateEndAndProposalRequirements(CampaignConfig config)
+        {
+            var culture = config.stats.First(s => s.Id == "Culture");
+            bool oldUse = culture.useCriticalThreshold;
+            int oldThreshold = culture.criticalThreshold;
+            var oldOnCritical = culture.onCritical;
+            try
+            {
+                culture.useCriticalThreshold = true;
+                culture.criticalThreshold = -1;
+                culture.onCritical = new List<Consequence>
+                {
+                    new Consequence { type = ConsequenceType.SetFlag, flag = "despedido" },
+                    new Consequence { type = ConsequenceType.EndCampaign, immediate = true }
+                };
+
+                // 1) Por debug
+                var (cm, go) = Build(config);
+                cm.StartNewCampaign();
+                cm.Debug_ModifyStat(culture, -5);
+                Check(cm.Phase == CampaignPhase.Finished, "Llegar al límite crítico con 'Ya' termina la partida en el momento");
+                Check(cm.State.HasFlag("despedido"), "El límite crítico activa el flag de despido");
+                Object.DestroyImmediate(go);
+
+                // 2) En medio del día, por una propuesta
+                culture.criticalThreshold = 4;
+                (cm, go) = Build(config);
+                cm.StartNewCampaign();
+                cm.Debug_ModifyStat(culture, 10);          // 10
+                var raga = cm.Proposals.Proposals.First(p => p.Id == "P_Raga");
+                cm.Proposals.RejectProposal(raga);         // Raga rechazada: Diplomacia -2, Cultura igual
+                cm.Debug_ModifyStat(culture, -6);          // 4 → cruza
+                Check(cm.Phase == CampaignPhase.Finished && cm.State.DaysCompleted == 0,
+                      "El despido ocurre en medio del día, sin cerrar el día");
+                Object.DestroyImmediate(go);
+            }
+            finally
+            {
+                culture.useCriticalThreshold = oldUse;
+                culture.criticalThreshold = oldThreshold;
+                culture.onCritical = oldOnCritical;
+            }
+
+            // 3) Requisitos sobre propuestas concretas
+            var (cm2, go2) = Build(config);
+            cm2.StartNewCampaign();
+            var kpop = cm2.Proposals.Proposals.First(p => p.Id == "P_Kpop");
+            var approvedKpop = new Requirement { type = RequirementType.ProposalApproved, proposal = kpop };
+            var rejectedKpop = new Requirement { type = RequirementType.ProposalRejected, proposal = kpop };
+            Check(!approvedKpop.Evaluate(cm2.State), "'Aprobaste K-pop' es falso antes de decidir");
+            cm2.Proposals.ApproveProposal(kpop);
+            Check(approvedKpop.Evaluate(cm2.State) && !rejectedKpop.Evaluate(cm2.State), "'Aprobaste K-pop' es verdadero después de aprobarla");
+            var asiaTotal = new Requirement { type = RequirementType.TotalApprovedFromRegion, region = kpop.region, comparison = Comparison.GreaterOrEqual, value = 1 };
+            Check(asiaTotal.Evaluate(cm2.State), "Aprobadas de Asia en la partida >= 1");
+            Object.DestroyImmediate(go2);
         }
 
         // ------------------------------------------------------------------ helpers

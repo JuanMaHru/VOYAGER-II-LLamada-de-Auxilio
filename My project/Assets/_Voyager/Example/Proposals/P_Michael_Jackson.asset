@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacbaa738faea36408a6078705a9e8a2, type: 3}
+  m_Name: P_Michael_Jackson
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.ProposalData
+  id: 
+  displayName: Michael Jackson
+  description: El Rey del Pop. Si los extraterrestres no bailan con esto, no bailan
+    con nada.
+  region: {fileID: 11400000, guid: 0322ef8863610da49a7a0600a49de5bc, type: 2}
+  category: {fileID: 11400000, guid: 6505f315ee20de643a397b2b125ed3f6, type: 2}
+  image: {fileID: 0}
+  specialEventText: 
+  onApprove:
+  - type: 0
+    amount: 10
+    region: {fileID: 11400000, guid: 0322ef8863610da49a7a0600a49de5bc, type: 2}
+    stat: {fileID: 0}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  - type: 2
+    amount: 4
+    region: {fileID: 0}
+    stat: {fileID: 11400000, guid: 23b7e3110ee6e0a4baa7e45fc6564eff, type: 2}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  onReject:
+  - type: 0
+    amount: -10
+    region: {fileID: 11400000, guid: 0322ef8863610da49a7a0600a49de5bc, type: 2}
+    stat: {fileID: 0}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  - type: 5
+    amount: 0
+    region: {fileID: 0}
+    stat: {fileID: 0}
+    flag: 
+    text: "La delegaci\xF3n de EEUU amenaza con recortar los fondos de la NASA."
+    ending: {fileID: 0}
+  weight: 1
+  availability:
+    mode: 0
+    requirements: []

@@ -16,14 +16,14 @@ MonoBehaviour:
   displayName: Rock argentino
   description: "Una selecci\xF3n de cl\xE1sicos del rock nacional. Guitarras, poes\xEDa
     y estadios llenos."
-  region: {fileID: 11400000, guid: 5465a97a5991a4d48940a5c8b4540835, type: 2}
+  region: {fileID: 11400000, guid: 3cf7086ea970f6741aa314b4264aaf1f, type: 2}
   category: {fileID: 11400000, guid: 6505f315ee20de643a397b2b125ed3f6, type: 2}
   image: {fileID: 0}
   specialEventText: 
   onApprove:
   - type: 0
     amount: 10
-    region: {fileID: 11400000, guid: 5465a97a5991a4d48940a5c8b4540835, type: 2}
+    region: {fileID: 11400000, guid: 3cf7086ea970f6741aa314b4264aaf1f, type: 2}
     stat: {fileID: 0}
     flag: 
     text: 
@@ -38,7 +38,7 @@ MonoBehaviour:
   onReject:
   - type: 0
     amount: -5
-    region: {fileID: 11400000, guid: 5465a97a5991a4d48940a5c8b4540835, type: 2}
+    region: {fileID: 11400000, guid: 3cf7086ea970f6741aa314b4264aaf1f, type: 2}
     stat: {fileID: 0}
     flag: 
     text: 

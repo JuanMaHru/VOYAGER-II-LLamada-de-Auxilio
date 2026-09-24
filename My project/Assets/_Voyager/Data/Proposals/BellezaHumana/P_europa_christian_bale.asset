@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacbaa738faea36408a6078705a9e8a2, type: 3}
+  m_Name: P_europa_christian_bale
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.ProposalData
+  id: belleza_humana_europa_christian_bale
+  displayName: Christian Bale
+  description: Propuesta del bloque Europa.
+  region: {fileID: 11400000, guid: 5a230b5b65f690b41943a2864261ca52, type: 2}
+  category: {fileID: 11400000, guid: 8760b27aed4f8754f9d83b436a543f04, type: 2}
+  image: {fileID: 0}
+  specialEventText: 
+  onApprove:
+  - type: 0
+    amount: 15
+    region: {fileID: 11400000, guid: 5a230b5b65f690b41943a2864261ca52, type: 2}
+    stat: {fileID: 0}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  - type: 2
+    amount: 8
+    region: {fileID: 0}
+    stat: {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  onReject:
+  - type: 0
+    amount: -5
+    region: {fileID: 11400000, guid: 5a230b5b65f690b41943a2864261ca52, type: 2}
+    stat: {fileID: 0}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  weight: 1
+  availability:
+    mode: 0
+    requirements: []

@@ -15,7 +15,8 @@ namespace Voyager
     {
         RandomFromPool, // se sortea entre CampaignConfig.conditionPool sin repetir (D3)
         Fixed,          // se usa DayConfig.fixedCondition
-        None            // día sin condición
+        None,           // día sin condición
+        Generated       // se genera a partir de las propuestas que salieron: siempre cumplible (ConditionGenerator)
     }
 
     /// <summary>Configuración de UN día. La lista de días define la duración de la campaña.</summary>
@@ -61,6 +62,9 @@ namespace Voyager
 
         [Tooltip("Condiciones que pueden sortearse para los días en modo RandomFromPool.")]
         public List<DailyConditionData> conditionPool = new List<DailyConditionData>();
+
+        [Tooltip("Ajustes de las condiciones que se arman solas (días en modo Generated).")]
+        public ConditionGeneratorSettings conditionGenerator = new ConditionGeneratorSettings();
 
         [Header("Días (la cantidad de elementos = días totales)")]
         public List<DayConfig> days = new List<DayConfig>();

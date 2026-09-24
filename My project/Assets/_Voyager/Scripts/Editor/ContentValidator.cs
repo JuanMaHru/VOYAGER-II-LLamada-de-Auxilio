@@ -90,6 +90,8 @@ namespace Voyager.EditorTools
             foreach (var c in config.conditionPool.Where(c => c != null))
             {
                 CheckRequirements($"Condición '{c.name}'", c.requirements, config, errors);
+                foreach (var d in c.regionDemands)
+                    if (d.demander == null || d.target == null) errors.Add($"Condición '{c.name}': exigencia sin región (demander/target).");
                 CheckConsequences($"Condición '{c.name}' (éxito)", c.onSuccess, config, errors);
                 CheckConsequences($"Condición '{c.name}' (falla)", c.onFail, config, errors);
             }
@@ -157,6 +159,16 @@ namespace Voyager.EditorTools
                     case RequirementType.FlagSet:
                     case RequirementType.FlagNotSet:
                         if (string.IsNullOrEmpty(r.flag)) errors.Add($"{where}: requisito de flag sin nombre.");
+                        break;
+                    case RequirementType.ProposalApproved:
+                    case RequirementType.ProposalRejected:
+                        if (r.proposal == null) errors.Add($"{where}: requisito de propuesta sin propuesta.");
+                        break;
+                    case RequirementType.TotalApprovedFromRegion:
+                        if (r.region == null) errors.Add($"{where}: requisito '{r.type}' sin región.");
+                        break;
+                    case RequirementType.TotalApprovedInCategory:
+                        if (r.category == null) errors.Add($"{where}: requisito '{r.type}' sin categoría.");
                         break;
                 }
             }

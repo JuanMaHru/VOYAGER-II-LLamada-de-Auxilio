@@ -15,5 +15,11 @@ namespace Voyager
 
         [Tooltip("Vacío = siempre válido (útil para el final por defecto).")]
         public RequirementGroup requirements = new RequirementGroup();
+
+        [Header("Reacciones de los alienígenas")]
+        [Tooltip("Mostrar, debajo del final, cómo reaccionan los alienígenas a algunas propuestas aprobadas. " +
+                 "Desactivalo en finales donde la sonda nunca llega (ej: Despedido).")]
+        public bool showAlienReactions = true;
+        [Min(0)] public int maxReactions = 3;
     }
 }

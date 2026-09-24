@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6873f867caf206142a6fa31ffd740c52, type: 3}
+  m_Name: Ending_Principal
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
+  id: principal
+  displayName: La respuesta
+  description: "El Comit\xE9 aprueba el mensaje con aplausos. Meses despu\xE9s, los
+    alien\xEDgenas encuentran la Voyager II.\nLo que ven les gusta: una especie rara,
+    contradictoria y ruidosa, pero con cosas que vale la pena salvar.\nLa respuesta
+    llega en forma de un mensaje corto: \"Vamos en camino\"."
+  image: {fileID: 0}
+  priority: 100
+  requirements:
+    mode: 0
+    requirements:
+    - type: 0
+      comparison: 0
+      value: 70
+      stat: {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 0}
+  showAlienReactions: 1
+  maxReactions: 3

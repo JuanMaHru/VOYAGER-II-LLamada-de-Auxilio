@@ -148,6 +148,13 @@ namespace Voyager
             int after = Clamp(before + delta, stat.minValue, stat.maxValue);
             statValues[stat.Id] = after;
             OnStatChanged?.Invoke(stat, before, after);
+
+            // Igual que las regiones: se dispara al CRUZAR el límite hacia abajo.
+            if (stat.useCriticalThreshold && before > stat.criticalThreshold && after <= stat.criticalThreshold)
+            {
+                GameLog.Info($"<color=red>[LÍMITE]</color> {stat.DisplayName} llegó a su límite crítico ({after} <= {stat.criticalThreshold}).");
+                Consequence.ApplyAll(stat.onCritical, this, $"Límite crítico de {stat.DisplayName}");
+            }
         }
 
         public void SetStat(StatData stat, int value, string source)
@@ -210,11 +217,26 @@ namespace Voyager
             return count;
         }
 
-        public int CountTotal(bool approved)
+        public int CountTotal(bool approved, RegionData region = null, CategoryData category = null)
         {
             int count = 0;
-            foreach (var r in history) if (r.approved == approved) count++;
+            foreach (var r in history)
+            {
+                if (r.approved != approved) continue;
+                if (region != null && r.regionId != region.Id) continue;
+                if (category != null && r.categoryId != category.Id) continue;
+                count++;
+            }
             return count;
+        }
+
+        /// <summary>¿Esta propuesta fue aprobada (true) / rechazada (false) en algún momento de la partida?</summary>
+        public bool WasDecided(ProposalData p, bool approved)
+        {
+            if (p == null) return false;
+            foreach (var r in history)
+                if (r.proposalId == p.Id && r.approved == approved) return true;
+            return false;
         }
 
         public int GetConsecutiveRejections(RegionData region)
@@ -235,14 +257,18 @@ namespace Voyager
             return copy;
         }
 
-        public void RequestCampaignEnd(EndingData ending, string source)
+        /// <summary>true = terminar YA (sin esperar al cierre del día).</summary>
+        public bool EndImmediately { get; private set; }
+
+        public void RequestCampaignEnd(EndingData ending, string source, bool immediate = false)
         {
             // Si ya había un final forzado, se mantiene el primero.
             if (!CampaignEndRequested || ForcedEnding == null) ForcedEnding = ending;
             CampaignEndRequested = true;
+            EndImmediately |= immediate;
             GameLog.Info($"<color=red>[FIN SOLICITADO]</color> por: {source}" +
                          (ending != null ? $" → {ending.DisplayName}" : " (se evaluarán los finales)") +
-                         ". Se aplicará al cerrar el día.");
+                         (immediate ? ". Termina YA." : ". Se aplicará al cerrar el día."));
         }
 
         // =====================================================================

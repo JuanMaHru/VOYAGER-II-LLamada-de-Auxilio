@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6873f867caf206142a6fa31ffd740c52, type: 3}
+  m_Name: Ending_ConurbanoGalactico
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
+  id: conurbanogalactico
+  displayName: "Conurbano gal\xE1ctico"
+  description: "Los alien\xEDgenas siguen las indicaciones del mensaje para aterrizar
+    en Laferrere. Terminan en Constituci\xF3n.\nSe toman el Roca, se bajan en cualquier
+    estaci\xF3n y nunca m\xE1s se supo de ellos.\nDejan una rese\xF1a en internet:
+    \"cinco estrellas, muy aut\xE9ntico\"."
+  image: {fileID: 0}
+  priority: 600
+  requirements:
+    mode: 0
+    requirements:
+    - type: 17
+      comparison: 0
+      value: 0
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 11400000, guid: 4922105491ae19144a7da618c6c7e4e1, type: 2}
+    - type: 17
+      comparison: 0
+      value: 0
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 11400000, guid: 94b5847329dd924408f85bffbf06881b, type: 2}
+  showAlienReactions: 1
+  maxReactions: 3

@@ -31,7 +31,13 @@ namespace Voyager
         ConsecutiveRejectionsOfRegion, // rechazos seguidos de propuestas de region OP valor (D7: "ignorar" un bloque)
 
         FlagSet,                   // el flag está activo
-        FlagNotSet                 // el flag NO está activo
+        FlagNotSet,                // el flag NO está activo
+
+        // (agregados al final para no cambiar el número de los anteriores en assets ya guardados)
+        ProposalApproved,          // la propuesta X fue aprobada en algún momento de la partida
+        ProposalRejected,          // la propuesta X fue rechazada en algún momento de la partida
+        TotalApprovedFromRegion,   // aprobadas de region en toda la partida OP valor
+        TotalApprovedInCategory    // aprobadas de category en toda la partida OP valor
     }
 
     /// <summary>
@@ -49,6 +55,7 @@ namespace Voyager
         public RegionData region;
         public CategoryData category;
         public string flag;
+        public ProposalData proposal;
 
         public bool Evaluate(GameState state)
         {
@@ -56,6 +63,8 @@ namespace Voyager
             {
                 case RequirementType.FlagSet:    return state.HasFlag(flag);
                 case RequirementType.FlagNotSet: return !state.HasFlag(flag);
+                case RequirementType.ProposalApproved: return state.WasDecided(proposal, true);
+                case RequirementType.ProposalRejected: return state.WasDecided(proposal, false);
 
                 case RequirementType.AllRegionsRelation:
                     foreach (var r in state.Regions)
@@ -90,6 +99,8 @@ namespace Voyager
                 case RequirementType.CurrentDay:              return state.CurrentDay;
                 case RequirementType.ConditionsFailed:        return state.ConditionsFailed;
                 case RequirementType.ConsecutiveRejectionsOfRegion: return state.GetConsecutiveRejections(region);
+                case RequirementType.TotalApprovedFromRegion: return state.CountTotal(true, region: region);
+                case RequirementType.TotalApprovedInCategory: return state.CountTotal(true, category: category);
                 default:
                     Debug.LogWarning($"[Voyager] RequirementType {type} no tiene valor numérico.");
                     return 0;
@@ -118,6 +129,10 @@ namespace Voyager
                 case RequirementType.ConsecutiveRejectionsOfRegion: return $"Rechazos seguidos de {Name(region)} {op} {value}";
                 case RequirementType.FlagSet:                 return $"Flag '{flag}' activo";
                 case RequirementType.FlagNotSet:              return $"Flag '{flag}' inactivo";
+                case RequirementType.ProposalApproved:        return $"Aprobaste '{Name(proposal)}'";
+                case RequirementType.ProposalRejected:        return $"Rechazaste '{Name(proposal)}'";
+                case RequirementType.TotalApprovedFromRegion: return $"Aprobadas de {Name(region)} en la partida {op} {value}";
+                case RequirementType.TotalApprovedInCategory: return $"Aprobadas de {Name(category)} en la partida {op} {value}";
                 default:                                      return type.ToString();
             }
         }

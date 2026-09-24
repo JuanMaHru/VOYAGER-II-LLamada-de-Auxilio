@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6873f867caf206142a6fa31ffd740c52, type: 3}
+  m_Name: Ending_CapitanCarpincho
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
+  id: capitancarpincho
+  displayName: El tratado del Carpincho
+  description: "El carpincho les parece la criatura m\xE1s evolucionada del planeta:
+    tranquila, sociable y siempre en el agua.\nFirman el tratado de paz con los carpinchos
+    de Nordelta. A los humanos no nos invitan."
+  image: {fileID: 0}
+  priority: 400
+  requirements:
+    mode: 0
+    requirements:
+    - type: 17
+      comparison: 0
+      value: 0
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 11400000, guid: b9f1e4e3f03a4d04dbe32702a47772c5, type: 2}
+  showAlienReactions: 1
+  maxReactions: 3

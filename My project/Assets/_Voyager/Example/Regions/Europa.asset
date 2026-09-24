@@ -20,7 +20,7 @@ MonoBehaviour:
   minRelation: -100
   maxRelation: 100
   useCriticalThreshold: 1
-  criticalThreshold: -15
+  criticalThreshold: -10
   onCritical:
   - type: 5
     amount: 0

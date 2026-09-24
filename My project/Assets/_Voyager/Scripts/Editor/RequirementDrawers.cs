@@ -29,9 +29,14 @@ namespace Voyager.EditorTools
             var t = (RequirementType)type.enumValueIndex;
 
             string target = TargetField(t);
-            bool numeric = t != RequirementType.FlagSet && t != RequirementType.FlagNotSet;
+            bool isProposal = t == RequirementType.ProposalApproved || t == RequirementType.ProposalRejected;
+            bool numeric = t != RequirementType.FlagSet && t != RequirementType.FlagNotSet && !isProposal;
 
-            if (target != null && numeric)
+            if (isProposal)
+            {
+                EditorGUI.PropertyField(r2, property.FindPropertyRelative("proposal"), new GUIContent("Propuesta"));
+            }
+            else if (target != null && numeric)
             {
                 float w = r2.width;
                 var a = new Rect(r2.x, r2.y, w * 0.5f - 2, Line);
@@ -67,8 +72,10 @@ namespace Voyager.EditorTools
                 case RequirementType.RegionRelation:
                 case RequirementType.ApprovedTodayFromRegion:
                 case RequirementType.RejectedTodayFromRegion:
-                case RequirementType.ConsecutiveRejectionsOfRegion: return "region";
-                case RequirementType.ApprovedTodayInCategory: return "category";
+                case RequirementType.ConsecutiveRejectionsOfRegion:
+                case RequirementType.TotalApprovedFromRegion: return "region";
+                case RequirementType.ApprovedTodayInCategory:
+                case RequirementType.TotalApprovedInCategory: return "category";
                 default: return null;
             }
         }
@@ -123,7 +130,10 @@ namespace Voyager.EditorTools
                     text.stringValue = EditorGUI.TextArea(r2, text.stringValue, style);
                     break;
                 case ConsequenceType.EndCampaign:
-                    EditorGUI.PropertyField(r2, property.FindPropertyRelative("ending"), new GUIContent("Final (vacío = evaluar)"));
+                    EditorGUI.PropertyField(new Rect(r2.x, r2.y, w * 0.7f - 2, Line), property.FindPropertyRelative("ending"), GUIContent.none);
+                    var imm = property.FindPropertyRelative("immediate");
+                    imm.boolValue = EditorGUI.ToggleLeft(new Rect(r2.x + w * 0.7f, r2.y, w * 0.3f, Line),
+                        new GUIContent("Ya", "Terminar YA, sin esperar al cierre del día. Final vacío = evaluar finales."), imm.boolValue);
                     break;
             }
             EditorGUI.EndProperty();

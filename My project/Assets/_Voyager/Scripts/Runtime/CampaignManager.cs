@@ -124,6 +124,7 @@ namespace Voyager
             foreach (var text in State.TakeNarratives()) OnNarrative?.Invoke(text);
             OnDecisionApplied?.Invoke(proposal, approved);
 
+            if (State.EndImmediately) { EndCampaign(State.ForcedEnding); return; } // ej: la tolerancia llegó a 0
             if (proposalManager.AllDecided) EndDay();
         }
 
@@ -135,10 +136,13 @@ namespace Voyager
             State.BeginDay(dayNumber);
             var dayCfg = config.days[dayNumber - 1];
 
-            var condition = ChooseCondition(dayCfg);
+            // Generated: primero salen las propuestas y la condición se arma a partir de ellas.
+            bool generated = dayCfg.conditionMode == ConditionMode.Generated;
+            var condition = generated ? null : ChooseCondition(dayCfg);
             var category = ChooseCategory(dayCfg, condition);
             var proposals = deck.Draw(BuildDrawRequest(dayCfg, category, condition), State, rng);
             foreach (var p in proposals) State.MarkProposalUsed(p);
+            if (generated) condition = GenerateCondition(proposals, dayNumber);
 
             CurrentDay = new DayContext
             {
@@ -169,7 +173,7 @@ namespace Voyager
             if (Phase != CampaignPhase.Deciding) return;
 
             var condition = CurrentDay.condition;
-            bool met = condition == null || condition.requirements.Evaluate(State);
+            bool met = condition == null || condition.IsMet(State);
 
             var relBefore = State.SnapshotRelations();
             var statsBefore = State.SnapshotStats();
@@ -179,16 +183,21 @@ namespace Voyager
             if (condition != null)
             {
                 log.AppendLine($"Condición: {condition.PlayerText}");
-                log.AppendLine(condition.requirements.DescribeWithResults(State));
+                log.AppendLine(condition.DescribeWithResults(State));
                 log.AppendLine(met ? "<color=green>Condición CUMPLIDA.</color>" : "<color=red>Condición INCUMPLIDA.</color>");
+
+                if (condition.regionDemands.Count > 0)
+                    log.Append("[EXIGENCIAS]\n").Append(condition.ApplyDemandEffects(State));
+
                 var consequences = met ? condition.onSuccess : condition.onFail;
                 Consequence.ApplyAll(consequences, State, $"Condición '{condition.DisplayName}' {(met ? "cumplida" : "incumplida")}");
                 if (consequences.Count > 0)
                 {
                     log.AppendLine("[CONSECUENCIAS]");
                     foreach (var c in consequences) log.AppendLine("  " + c.Describe());
-                    log.Append(State.DescribeChanges(relBefore, statsBefore));
                 }
+                if (condition.regionDemands.Count > 0 || consequences.Count > 0)
+                    log.Append(State.DescribeChanges(relBefore, statsBefore));
             }
             else log.AppendLine("Sin condición.");
 
@@ -211,18 +220,54 @@ namespace Voyager
 
             OnDayEnded?.Invoke(LastDayResult);
 
+            if (State.EndImmediately) { EndCampaign(State.ForcedEnding); return; }
             if (autoAdvanceDay) NextDay();
         }
 
         void EndCampaign(EndingData forced)
         {
+            if (Phase == CampaignPhase.Finished) return;
             FinalEnding = forced != null ? forced : EndingResolver.Resolve(config.endings, config.defaultEnding, State);
             if (forced != null) GameLog.Info($"<b>[FINAL FORZADO]</b> {forced.DisplayName}");
             Phase = CampaignPhase.Finished;
+            PickAlienReactions();
 
+            var reactionsLog = new StringBuilder();
+            foreach (var p in FinalReactions) reactionsLog.AppendLine($"  • {p.DisplayName}: {p.alienReaction}");
             GameLog.Info($"<b>══════ FIN DE LA PARTIDA ══════</b>\nFinal: {(FinalEnding != null ? FinalEnding.DisplayName : "(ninguno)")}\n" +
+                         (FinalReactions.Count > 0 ? "[REACCIONES ALIENÍGENAS]\n" + reactionsLog : "") +
                          State.DescribeFullState());
             OnCampaignEnded?.Invoke(FinalEnding);
+        }
+
+        readonly List<ProposalData> finalReactions = new List<ProposalData>();
+
+        /// <summary>Propuestas aprobadas cuya reacción alienígena se muestra en el final (ProposalData.alienReaction).</summary>
+        public IReadOnlyList<ProposalData> FinalReactions => finalReactions;
+
+        void PickAlienReactions()
+        {
+            finalReactions.Clear();
+            if (FinalEnding == null || !FinalEnding.showAlienReactions || FinalEnding.maxReactions <= 0) return;
+
+            // Candidatas: aprobadas con reacción que NO sean ya protagonistas del final elegido.
+            var featured = new HashSet<ProposalData>();
+            foreach (var r in FinalEnding.requirements.requirements)
+                if (r.type == RequirementType.ProposalApproved && r.proposal != null) featured.Add(r.proposal);
+
+            var candidates = new List<ProposalData>();
+            foreach (var record in State.History)
+            {
+                if (!record.approved) continue;
+                var p = config.database.FindById(record.proposalId);
+                if (p != null && !featured.Contains(p) && !string.IsNullOrEmpty(p.alienReaction)) candidates.Add(p);
+            }
+            for (int i = candidates.Count - 1; i > 0; i--)
+            {
+                int j = rng.Next(i + 1);
+                (candidates[i], candidates[j]) = (candidates[j], candidates[i]);
+            }
+            for (int i = 0; i < candidates.Count && i < FinalEnding.maxReactions; i++) finalReactions.Add(candidates[i]);
         }
 
         // =====================================================================
@@ -257,6 +302,19 @@ namespace Voyager
             var chosen = candidates[rng.Next(candidates.Count)];
             State.MarkConditionUsed(chosen);
             return chosen;
+        }
+
+        DailyConditionData lastGenerated; // instancia creada en runtime: se destruye al generar la siguiente
+
+        DailyConditionData GenerateCondition(List<ProposalData> proposals, int dayNumber)
+        {
+            if (lastGenerated != null)
+            {
+                if (Application.isPlaying) Destroy(lastGenerated);
+                else DestroyImmediate(lastGenerated);
+            }
+            lastGenerated = ConditionGenerator.Generate(proposals, State.Regions, config.conditionGenerator, rng, dayNumber);
+            return lastGenerated;
         }
 
         List<DailyConditionData> GetConditionCandidates(DayConfig dayCfg, bool includeUsed)
@@ -321,8 +379,7 @@ namespace Voyager
             var sb = new StringBuilder();
             sb.AppendLine($"<b>════ [DÍA {CurrentDay.day}/{CurrentDay.totalDays}] ════</b>");
             sb.AppendLine($"Categoría: {CurrentDay.CategoryText}");
-            sb.AppendLine($"Condición: {CurrentDay.ConditionText}" +
-                          (CurrentDay.condition != null ? $"  [{CurrentDay.condition.requirements.Describe()}]" : ""));
+            sb.AppendLine($"Condición: {CurrentDay.ConditionText}");
             sb.AppendLine("Propuestas:");
             for (int i = 0; i < CurrentDay.proposals.Count; i++)
             {
@@ -365,9 +422,11 @@ namespace Voyager
                 return;
             }
             foreach (var p in CurrentDay.proposals) State.UnmarkProposalUsed(p);
-            var proposals = deck.Draw(BuildDrawRequest(CurrentDay.config, CurrentDay.category, CurrentDay.condition), State, rng);
+            bool generated = CurrentDay.config.conditionMode == ConditionMode.Generated;
+            var proposals = deck.Draw(BuildDrawRequest(CurrentDay.config, CurrentDay.category, generated ? null : CurrentDay.condition), State, rng);
             foreach (var p in proposals) State.MarkProposalUsed(p);
             CurrentDay.proposals = proposals;
+            if (generated) CurrentDay.condition = GenerateCondition(proposals, CurrentDay.day);
             GameLog.Info("[DEBUG] Propuestas regeneradas.");
             LogDayStart();
             proposalManager.SetProposals(proposals);
@@ -388,6 +447,7 @@ namespace Voyager
             var rel = State.SnapshotRelations(); var st = State.SnapshotStats();
             State.ModifyRelation(region, delta, "DEBUG");
             GameLog.Info("[DEBUG] Relación modificada\n" + State.DescribeChanges(rel, st));
+            if (State.EndImmediately) EndCampaign(State.ForcedEnding);
         }
 
         public void Debug_ModifyStat(StatData stat, int delta)
@@ -396,6 +456,7 @@ namespace Voyager
             var rel = State.SnapshotRelations(); var st = State.SnapshotStats();
             State.ModifyStat(stat, delta, "DEBUG");
             GameLog.Info("[DEBUG] Stat modificado\n" + State.DescribeChanges(rel, st));
+            if (State.EndImmediately) EndCampaign(State.ForcedEnding);
         }
 
         public void Debug_ForceEnding(EndingData ending)

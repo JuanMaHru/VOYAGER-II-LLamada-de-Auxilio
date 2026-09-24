@@ -1,10 +1,14 @@
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Voyager.UI
 {
-    /// <summary>Pantalla final: muestra el EndingData elegido. "Reiniciar" empieza otra partida.</summary>
+    /// <summary>
+    /// Pantalla final: muestra el EndingData elegido y, debajo, cómo reaccionaron los
+    /// alienígenas a algunas propuestas aprobadas. "Reiniciar" empieza otra partida.
+    /// </summary>
     public class EndingScreenUI : MonoBehaviour
     {
         public CampaignManager campaign;
@@ -15,6 +19,10 @@ namespace Voyager.UI
         public TMP_Text descriptionText;
         public Image endingImage;
         public Button restartButton;
+
+        [Header("Reacciones de los alienígenas (opcional)")]
+        public TMP_Text reactionsText;
+        public string reactionsHeader = "Lo que más les llamó la atención:";
 
         void Awake()
         {
@@ -41,7 +49,19 @@ namespace Voyager.UI
             if (endingImage != null)
             {
                 endingImage.sprite = ending.image;
-                endingImage.enabled = ending.image != null;
+                endingImage.gameObject.SetActive(ending.image != null); // sin imagen, el texto sube
+            }
+
+            if (reactionsText != null)
+            {
+                var sb = new StringBuilder();
+                if (campaign.FinalReactions.Count > 0)
+                {
+                    sb.AppendLine(reactionsHeader);
+                    foreach (var p in campaign.FinalReactions)
+                        sb.Append("• <b>").Append(p.DisplayName).Append(":</b> ").AppendLine(p.alienReaction);
+                }
+                reactionsText.text = sb.ToString();
             }
         }
 

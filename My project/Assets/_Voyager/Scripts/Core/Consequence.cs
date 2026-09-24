@@ -37,6 +37,9 @@ namespace Voyager
         [UnityEngine.Tooltip("Solo EndCampaign: final a mostrar. Vacío = evaluar los finales normalmente.")]
         public EndingData ending;
 
+        [UnityEngine.Tooltip("Solo EndCampaign: terminar YA, sin esperar al cierre del día.")]
+        public bool immediate;
+
         public void Apply(GameState state, string source)
         {
             switch (type)
@@ -67,7 +70,7 @@ namespace Voyager
                     break;
 
                 case ConsequenceType.EndCampaign:
-                    state.RequestCampaignEnd(ending, source);
+                    state.RequestCampaignEnd(ending, source, immediate);
                     break;
             }
         }
@@ -83,7 +86,8 @@ namespace Voyager
                 case ConsequenceType.SetFlag:          return $"Activar flag '{flag}'";
                 case ConsequenceType.ClearFlag:        return $"Desactivar flag '{flag}'";
                 case ConsequenceType.ShowNarrative:    return $"Narrativa: \"{Short(text)}\"";
-                case ConsequenceType.EndCampaign:      return ending != null ? $"FIN DE PARTIDA → {ending.DisplayName}" : "FIN DE PARTIDA (evaluar finales)";
+                case ConsequenceType.EndCampaign:      return (immediate ? "FIN INMEDIATO" : "FIN DE PARTIDA") +
+                                                              (ending != null ? $" → {ending.DisplayName}" : " (evaluar finales)");
                 default:                               return type.ToString();
             }
         }
