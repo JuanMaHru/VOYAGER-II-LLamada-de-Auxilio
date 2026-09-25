@@ -282,6 +282,8 @@ namespace Voyager.EditorTools
                 b.gameObject.AddComponent<BackToMenuButton>().menuSceneName = menuSceneName;
                 Undo.RegisterCreatedObjectUndo(b.gameObject, "Botón menú principal");
             }
+
+            MenuStyleKit.RestyleGameScene(canvasRoot); // botones con la estética de los menús
         }
 
         /// <summary>Pantalla de pausa: se abre con ESC. Va última en el Canvas para quedar encima de todo.</summary>

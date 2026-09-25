@@ -24,6 +24,24 @@ namespace Voyager.EditorTools
 
         static readonly string[] Credits = { "Juan Manuel Hruby", "Alexis Mendoza", "Pedro Noriega" };
 
+        static bool skipRebuildQuestion;
+
+        /// <summary>
+        /// Rehace el menú con el estilo nuevo (opciones, sonido, controles, créditos) y pasa
+        /// los botones de la escena del juego (pausa, final, carteles) al mismo estilo.
+        /// </summary>
+        [MenuItem("Voyager/Aplicar estilo nuevo y menú de opciones", priority = 6)]
+        public static void ApplyNewStyle()
+        {
+            if (!Application.isBatchMode && !EditorUtility.DisplayDialog("Estilo nuevo",
+                    "Esto REHACE la escena MainMenu (se pierden los cambios hechos a mano en ella) y pasa los botones " +
+                    "de la escena del juego al estilo nuevo, sin rehacerla. ¿Seguir?", "Seguir", "Cancelar"))
+                return;
+            skipRebuildQuestion = true;
+            try { Build(); }
+            finally { skipRebuildQuestion = false; }
+        }
+
         [MenuItem("Voyager/Crear escena de menú principal", priority = 3)]
         public static void Build()
         {
@@ -39,7 +57,7 @@ namespace Voyager.EditorTools
             }
             string gameSceneName = System.IO.Path.GetFileNameWithoutExtension(gameScenePath);
 
-            if (System.IO.File.Exists(MenuScenePath) && !Application.isBatchMode &&
+            if (System.IO.File.Exists(MenuScenePath) && !Application.isBatchMode && !skipRebuildQuestion &&
                 !EditorUtility.DisplayDialog("Menú principal", $"Ya existe {MenuScenePath}. ¿Rehacerla?", "Rehacer", "Cancelar"))
                 return;
 
@@ -95,11 +113,14 @@ namespace Voyager.EditorTools
             var root = canvasGo.transform;
 
             Stretch(Img("Img_Fondo", root, Navy).rectTransform);
+            var dark = MenuStyleKit.Palette.OnDark;
+            var cream = MenuStyleKit.Cream;
 
-            // ---------- Panel principal ----------
+            // ---------- Menú principal ----------
             var main = UIObj("Panel_Principal", root);
             Stretch(Rt(main));
 
+            // Textos de respaldo: si existe el arte (Texto Titulo), ArtSetup los apaga y pone el logo.
             var title = Txt("Txt_Titulo", main.transform, "VOYAGER II", 160, TextAlignmentOptions.Center, Gold, FontStyles.Bold);
             TopBand(title.rectTransform, 100, 100, 110, 200);
             title.characterSpacing = 12;
@@ -107,42 +128,133 @@ namespace Voyager.EditorTools
             TopBand(subtitle.rectTransform, 100, 100, 310, 90);
             var tagline = Txt("Txt_Pregunta", main.transform,
                 "Si tuvieras que explicarle a alguien que nunca conoció la Tierra qué es la humanidad, ¿qué elegirías mostrarle?",
-                28, TextAlignmentOptions.Center, new Color(1, 1, 1, 0.6f), FontStyles.Italic);
-            TopBand(tagline.rectTransform, 360, 360, 410, 90);
+                26, TextAlignmentOptions.Center, new Color(cream.r, cream.g, cream.b, 0.7f), FontStyles.Italic);
+            TopBand(tagline.rectTransform, 360, 360, 458, 80);
 
-            var buttons = UIObj("Botones", main.transform);
-            Place(Rt(buttons), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 90), new Vector2(520, 420));
-            var col = buttons.AddComponent<VerticalLayoutGroup>();
-            col.spacing = 30; col.childControlWidth = col.childControlHeight = true; col.childForceExpandWidth = col.childForceExpandHeight = true;
-            var play = Btn("Btn_Jugar", buttons.transform, "JUGAR", Green, 48);
-            var credits = Btn("Btn_Creditos", buttons.transform, "CRÉDITOS", Hex("33415C"), 40);
-            var quit = Btn("Btn_Salir", buttons.transform, "SALIR", Red, 40);
+            // Créditos está dentro de Opciones (no en el menú principal).
+            var list = MenuList("Botones", main.transform, 3, new Vector2(0.5f, 0), new Vector2(0, 130));
+            var play = MenuStyleKit.CreateMenuButton("Btn_Jugar", list, "JUGAR", dark);
+            var options = MenuStyleKit.CreateMenuButton("Btn_Opciones", list, "OPCIONES", dark);
+            var quit = MenuStyleKit.CreateMenuButton("Btn_Salir", list, "SALIR", dark);
 
-            // ---------- Panel de créditos ----------
-            var creditsPanel = Img("Panel_Creditos", root, Dim, raycast: true);
-            Stretch(creditsPanel.rectTransform);
-            var box = Box(creditsPanel.transform, new Vector2(900, 620));
-            var cTitle = Txt("Txt_TituloCreditos", box, "CRÉDITOS", 56, TextAlignmentOptions.Center, Ink, FontStyles.Bold);
-            TopBand(cTitle.rectTransform, 40, 40, 50, 80);
-            var names = Txt("Txt_Nombres", box, string.Join("\n", Credits), 44, TextAlignmentOptions.Center, Ink);
-            names.lineSpacing = 30;
-            Stretch(names.rectTransform, 60, 60, 160, 170);
-            var back = Btn("Btn_Volver", box, "Volver al menú", Navy, 32);
-            Place(Rt(back.gameObject), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 50), new Vector2(420, 90));
-            creditsPanel.gameObject.SetActive(false);
+            // ---------- Opciones ----------
+            var optionsPanel = SubScreen("Panel_Opciones", root, "OPCIONES");
+            var oList = MenuList("Botones", optionsPanel, 4, new Vector2(0.5f, 0.5f), new Vector2(0, -60));
+            var sound = MenuStyleKit.CreateMenuButton("Btn_Sonido", oList, "SONIDO", dark);
+            var controls = MenuStyleKit.CreateMenuButton("Btn_Controles", oList, "CONTROLES", dark);
+            var optCredits = MenuStyleKit.CreateMenuButton("Btn_Creditos", oList, "CRÉDITOS", dark);
+            var optBack = MenuStyleKit.CreateMenuButton("Btn_Volver", oList, "VOLVER", dark);
+
+            // ---------- Sonido ----------
+            var soundPanel = SubScreen("Panel_Sonido", root, "SONIDO");
+            var rows = UIObj("Filas", soundPanel);
+            Place(Rt(rows), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(820, 450));
+            var soundUI = soundPanel.gameObject.AddComponent<SoundOptionsUI>();
+            (soundUI.masterSlider, soundUI.masterText) = VolumeRow(rows.transform, "Maestro", 0);
+            (soundUI.effectsSlider, soundUI.effectsText) = VolumeRow(rows.transform, "Efectos", 1);
+            (soundUI.musicSlider, soundUI.musicText) = VolumeRow(rows.transform, "Musica", 2);
+            var soundBack = BackButton(soundPanel);
+
+            // ---------- Controles ----------
+            var controlsPanel = SubScreen("Panel_Controles", root, "CONTROLES");
+            var controlsText = Txt("Txt_Controles", controlsPanel,
+                "<b>APROBAR:</b> Click izquierdo.\n" +
+                "<b>RECHAZAR:</b> Click izquierdo.\n" +
+                "<b>ARRASTRAR HOJAS:</b> Mantener click izquierdo.\n" +
+                "<b>PAUSA:</b> Esc.",
+                36, TextAlignmentOptions.Left, cream);
+            controlsText.lineSpacing = 40;
+            controlsText.characterSpacing = 3;
+            Place(controlsText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(980, 380));
+            var controlsBack = BackButton(controlsPanel);
+
+            // ---------- Créditos ----------
+            var creditsPanel = SubScreen("Panel_Creditos", root, "CRÉDITOS");
+            var names = Txt("Txt_Nombres", creditsPanel, string.Join("\n", Credits), 48, TextAlignmentOptions.Center, cream);
+            names.lineSpacing = 40;
+            names.characterSpacing = 4;
+            Place(names.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 0), new Vector2(1000, 380));
+            var creditsBack = BackButton(creditsPanel);
 
             // ---------- Script del menú ----------
             var menu = canvasGo.AddComponent<MainMenuUI>();
             menu.gameSceneName = gameSceneName;
             menu.mainPanel = main;
+            menu.optionsPanel = optionsPanel.gameObject;
+            menu.soundPanel = soundPanel.gameObject;
+            menu.controlsPanel = controlsPanel.gameObject;
             menu.creditsPanel = creditsPanel.gameObject;
             menu.playButton = play;
-            menu.creditsButton = credits;
+            menu.optionsButton = options;
             menu.quitButton = quit;
-            menu.creditsBackButton = back;
+            menu.soundButton = sound;
+            menu.controlsButton = controls;
+            menu.optionsCreditsButton = optCredits;
+            menu.backButtons = new List<Button> { optBack, soundBack, controlsBack, creditsBack };
+            foreach (var p in new[] { optionsPanel, soundPanel, controlsPanel, creditsPanel }) p.gameObject.SetActive(false);
 
             AddTitleScreen(root, menu);
             ArtSetup.ApplyToMenu(root); // si existen Fondo y Texto Titulo en Assets/Art/UI
+        }
+
+        // ------------------------------------------------------------------ piezas del menú
+        /// <summary>Lista vertical de botones de menú (alto fijo por renglón, como en la referencia).</summary>
+        static Transform MenuList(string name, Transform parent, int count, Vector2 anchor, Vector2 pos)
+        {
+            const float rowHeight = 70, spacing = 12;
+            var list = UIObj(name, parent);
+            Place(Rt(list), anchor, new Vector2(0.5f, anchor.y), pos, new Vector2(560, count * rowHeight + (count - 1) * spacing));
+            var col = list.AddComponent<VerticalLayoutGroup>();
+            col.spacing = spacing;
+            col.childControlWidth = col.childControlHeight = true;
+            col.childForceExpandWidth = col.childForceExpandHeight = true;
+            return list.transform;
+        }
+
+        /// <summary>Pantalla secundaria: oscurece el fondo de estrellas y pone el título grande arriba.</summary>
+        static Transform SubScreen(string name, Transform root, string title)
+        {
+            var panel = Img(name, root, new Color(0, 0, 0, 0.55f), raycast: true);
+            Stretch(panel.rectTransform);
+            var t = Txt("Txt_Titulo", panel.transform, title, 96, TextAlignmentOptions.Center, MenuStyleKit.Cream, FontStyles.Bold);
+            t.characterSpacing = 10;
+            TopBand(t.rectTransform, 100, 100, 130, 130);
+            return panel.transform;
+        }
+
+        static Button BackButton(Transform panel)
+        {
+            var b = MenuStyleKit.CreateMenuButton("Btn_Volver", panel, "VOLVER", MenuStyleKit.Palette.OnDark);
+            Place(Rt(b.gameObject), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 110), new Vector2(360, 70));
+            return b;
+        }
+
+        static (Slider, TMPro.TMP_Text) VolumeRow(Transform parent, string key, int index)
+        {
+            var label = Txt("Txt_Volumen" + key, parent, "VOLUMEN", 34, TextAlignmentOptions.Center, MenuStyleKit.Cream);
+            label.characterSpacing = 4;
+            TopBand(label.rectTransform, 0, 0, index * 150, 50);
+            var slider = MenuStyleKit.CreateSlider("Slider_" + key, parent);
+            TopBand(Rt(slider.gameObject), 60, 60, index * 150 + 62, 40);
+            return (slider, label);
+        }
+
+        /// <summary>Créditos queda solo dentro de Opciones: quita el botón del menú principal y achica la lista.</summary>
+        static void RemoveMainMenuCredits(MainMenuUI menu)
+        {
+            var list = menu.transform.Find("Panel_Principal/Botones");
+            var credits = list != null ? list.Find("Btn_Creditos") : null;
+            if (credits == null) return;
+
+            Undo.RecordObject(menu, "Quitar Créditos");
+            menu.creditsButton = null;
+            Undo.DestroyObjectImmediate(credits.gameObject);
+
+            var rt = (RectTransform)list;
+            Undo.RecordObject(rt, "Lista del menú");
+            int rows = list.childCount;
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, rows * 70 + (rows - 1) * 12);
+            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, 130);
         }
 
         /// <summary>Pantalla antes del menú: título + "Presiona cualquier tecla para comenzar".</summary>
@@ -161,7 +273,8 @@ namespace Voyager.EditorTools
             TopBand(subtitle.rectTransform, 100, 100, 490, 100);
 
             var press = Txt("Txt_PresionaTecla", panel.transform, "Presiona cualquier tecla para comenzar", 40,
-                            TextAlignmentOptions.Center, Color.white);
+                            TextAlignmentOptions.Center, MenuStyleKit.Cream);
+            press.characterSpacing = 4;
             Place(press.rectTransform, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 110), new Vector2(1200, 70));
 
             menu.titlePanel = panel.gameObject;
@@ -202,6 +315,7 @@ namespace Voyager.EditorTools
             if (menu != null)
             {
                 AddTitleScreen(menu.transform, menu);
+                RemoveMainMenuCredits(menu);
                 EditorUtility.SetDirty(menu);
                 EditorSceneManager.MarkSceneDirty(menuScene);
                 EditorSceneManager.SaveScene(menuScene);
