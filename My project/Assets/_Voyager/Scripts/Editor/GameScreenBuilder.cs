@@ -25,20 +25,20 @@ namespace Voyager.EditorTools
         const int CardCount = 4;
 
         // ---- Paleta provisoria (oficina burocrática de la NASA) ----
-        static readonly Color Navy = Hex("1B2536");
-        static readonly Color Wood = Hex("5A3E2B");
-        static readonly Color HeaderBg = new Color(0.07f, 0.09f, 0.14f, 0.95f);
-        static readonly Color Paper = Hex("F2E8CF");
-        static readonly Color Ink = Hex("2B2B2B");
-        static readonly Color Gold = Hex("F2C14E");
-        static readonly Color Green = Hex("2E8B57");
-        static readonly Color Red = Hex("C0392B");
-        static readonly Color Dim = new Color(0f, 0f, 0f, 0.65f);
+        internal static readonly Color Navy = Hex("1B2536");
+        internal static readonly Color Wood = Hex("5A3E2B");
+        internal static readonly Color HeaderBg = new Color(0.07f, 0.09f, 0.14f, 0.95f);
+        internal static readonly Color Paper = Hex("F2E8CF");
+        internal static readonly Color Ink = Hex("2B2B2B");
+        internal static readonly Color Gold = Hex("F2C14E");
+        internal static readonly Color Green = Hex("2E8B57");
+        internal static readonly Color Red = Hex("C0392B");
+        internal static readonly Color Dim = new Color(0f, 0f, 0f, 0.65f);
 
         [MenuItem("Voyager/Crear pantalla del juego", priority = 2)]
         public static void Build()
         {
-            if (!EnsureTmpEssentials()) return;
+            if (!EnsureTmpEssentials(Build)) return;
 
             var existing = GameObject.Find(CanvasName);
             if (existing != null)
@@ -214,6 +214,9 @@ namespace Voyager.EditorTools
             finalUI.reactionsText = fReact;
             finalPanel.gameObject.SetActive(false);
 
+            AddMenuButtons(root, MainMenuBuilder.MenuSceneName);
+            ArtSetup.ApplyToGame(root); // si existen Fondo y Texto Titulo en Assets/Art/UI
+
             EditorSceneManager.MarkSceneDirty(canvasGo.scene);
             Selection.activeGameObject = canvasGo;
             Debug.Log("[Voyager] Pantalla del juego creada. Guardá la escena (Ctrl+S) y apretá Play.");
@@ -223,7 +226,7 @@ namespace Voyager.EditorTools
         // Preparativos
         // =====================================================================
         /// <summary>Importa TMP Essential Resources si faltan (sin eso los textos no se ven).</summary>
-        static bool EnsureTmpEssentials()
+        internal static bool EnsureTmpEssentials(Action whenReady)
         {
             if (AssetDatabase.FindAssets("t:TMP_Settings").Length > 0) return true;
 
@@ -237,19 +240,84 @@ namespace Voyager.EditorTools
                 return false;
             }
 
-            Debug.Log("[Voyager] Importando TMP Essential Resources... La pantalla se crea sola cuando termine.");
+            Debug.Log("[Voyager] Importando TMP Essential Resources... Se continúa sola cuando termine.");
+            pendingAfterTmp = whenReady;
             AssetDatabase.importPackageCompleted += OnTmpImported;
             AssetDatabase.ImportPackage(package, false);
             return false;
         }
 
-        static void OnTmpImported(string packageName)
+        static Action pendingAfterTmp;
+
+        internal static void OnTmpImported(string packageName)
         {
             AssetDatabase.importPackageCompleted -= OnTmpImported;
-            EditorApplication.delayCall += Build;
+            var next = pendingAfterTmp;
+            pendingAfterTmp = null;
+            if (next != null) EditorApplication.delayCall += () => next();
         }
 
-        static CampaignManager EnsureGameSystems()
+        // =====================================================================
+        // Volver al menú: pausa con ESC (durante la partida) y botón en la pantalla final
+        // =====================================================================
+        /// <summary>
+        /// Deja la escena del juego al día SIN rehacer la pantalla:
+        /// quita el viejo botón "Menú" de la cabecera, agrega la pausa (ESC) y el botón
+        /// "Menú principal" de la pantalla final. Lo que ya existe no se duplica.
+        /// </summary>
+        internal static void AddMenuButtons(Transform canvasRoot, string menuSceneName)
+        {
+            var oldHeaderButton = canvasRoot.Find("UI_Header/Btn_Menu");
+            if (oldHeaderButton != null) Undo.DestroyObjectImmediate(oldHeaderButton.gameObject);
+
+            AddPauseMenu(canvasRoot, menuSceneName);
+
+            var finalPanel = canvasRoot.Find("UI_Final/Panel_Final");
+            if (finalPanel != null && finalPanel.Find("Btn_MenuPrincipal") == null)
+            {
+                var restart = finalPanel.Find("Btn_Reiniciar") as RectTransform;
+                if (restart != null) restart.anchoredPosition = new Vector2(-240, restart.anchoredPosition.y);
+                var b = Btn("Btn_MenuPrincipal", finalPanel, "Menú principal", Hex("33415C"), 32);
+                Place(Rt(b.gameObject), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(240, 50), new Vector2(420, 90));
+                b.gameObject.AddComponent<BackToMenuButton>().menuSceneName = menuSceneName;
+                Undo.RegisterCreatedObjectUndo(b.gameObject, "Botón menú principal");
+            }
+        }
+
+        /// <summary>Pantalla de pausa: se abre con ESC. Va última en el Canvas para quedar encima de todo.</summary>
+        static void AddPauseMenu(Transform canvasRoot, string menuSceneName)
+        {
+            if (canvasRoot.Find("UI_Pausa") != null) return;
+
+            var holder = FullScreenHolder("UI_Pausa", canvasRoot);
+            holder.transform.SetAsLastSibling();
+            var panel = Img("Panel_Pausa", holder.transform, Dim, raycast: true);
+            Stretch(panel.rectTransform);
+            var box = Box(panel.transform, new Vector2(700, 560));
+            var title = Txt("Txt_Pausa", box, "PAUSA", 64, TextAlignmentOptions.Center, Ink, FontStyles.Bold);
+            TopBand(title.rectTransform, 40, 40, 50, 90);
+            var hint = Txt("Txt_Ayuda", box, "Presioná ESC para volver al juego", 24, TextAlignmentOptions.Center,
+                           new Color(0.35f, 0.35f, 0.35f), FontStyles.Italic);
+            TopBand(hint.rectTransform, 40, 40, 140, 40);
+
+            var buttons = UIObj("Botones", box);
+            Place(Rt(buttons), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 60), new Vector2(460, 230));
+            var col = buttons.AddComponent<VerticalLayoutGroup>();
+            col.spacing = 30; col.childControlWidth = col.childControlHeight = true; col.childForceExpandWidth = col.childForceExpandHeight = true;
+            var resume = Btn("Btn_Reanudar", buttons.transform, "Reanudar", Green, 36);
+            var menu = Btn("Btn_MenuPrincipal", buttons.transform, "Menú principal", Hex("33415C"), 36);
+
+            var pause = holder.AddComponent<PauseMenuUI>();
+            pause.campaign = Object.FindAnyObjectByType<CampaignManager>();
+            pause.panel = panel.gameObject;
+            pause.resumeButton = resume;
+            pause.menuButton = menu;
+            pause.menuSceneName = menuSceneName;
+            panel.gameObject.SetActive(false);
+            Undo.RegisterCreatedObjectUndo(holder, "Pantalla de pausa");
+        }
+
+        internal static CampaignManager EnsureGameSystems()
         {
             var cm = Object.FindAnyObjectByType<CampaignManager>();
             if (cm == null)
@@ -283,7 +351,7 @@ namespace Voyager.EditorTools
         }
 
         /// <summary>El proyecto usa el Input System nuevo: el EventSystem necesita InputSystemUIInputModule.</summary>
-        static void EnsureEventSystem()
+        internal static void EnsureEventSystem()
         {
             var es = Object.FindAnyObjectByType<EventSystem>();
             if (es == null)
@@ -307,7 +375,7 @@ namespace Voyager.EditorTools
         // =====================================================================
         // Piezas
         // =====================================================================
-        static ProposalCardUI Card(string name, Transform parent)
+        internal static ProposalCardUI Card(string name, Transform parent)
         {
             var card = UIObj(name, parent);
             Rt(card).sizeDelta = new Vector2(330, 390);
@@ -350,7 +418,7 @@ namespace Voyager.EditorTools
             return ui;
         }
 
-        static GameObject Stamp(string name, Transform parent, string label, Color color, float angle)
+        internal static GameObject Stamp(string name, Transform parent, string label, Color color, float angle)
         {
             var img = Img(name, parent, new Color(color.r, color.g, color.b, 0.9f));
             img.rectTransform.localRotation = Quaternion.Euler(0, 0, angle);
@@ -359,7 +427,7 @@ namespace Voyager.EditorTools
             return img.gameObject;
         }
 
-        static Slider Slider(string name, Transform parent, out Image fill)
+        internal static Slider Slider(string name, Transform parent, out Image fill)
         {
             var bg = Img(name, parent, new Color(1, 1, 1, 0.15f), raycast: false);
             var slider = bg.gameObject.AddComponent<Slider>();
@@ -375,14 +443,14 @@ namespace Voyager.EditorTools
             return slider;
         }
 
-        static Transform Box(Transform parent, Vector2 size)
+        internal static Transform Box(Transform parent, Vector2 size)
         {
             var box = Img("Caja", parent, Paper, raycast: true);
             Place(box.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, size);
             return box.transform;
         }
 
-        static GameObject FullScreenHolder(string name, Transform parent)
+        internal static GameObject FullScreenHolder(string name, Transform parent)
         {
             var go = UIObj(name, parent);
             Stretch(Rt(go));
@@ -392,16 +460,16 @@ namespace Voyager.EditorTools
         // =====================================================================
         // Helpers de UI
         // =====================================================================
-        static GameObject UIObj(string name, Transform parent)
+        internal static GameObject UIObj(string name, Transform parent)
         {
             var go = new GameObject(name, typeof(RectTransform));
             go.transform.SetParent(parent, false);
             return go;
         }
 
-        static RectTransform Rt(GameObject go) => (RectTransform)go.transform;
+        internal static RectTransform Rt(GameObject go) => (RectTransform)go.transform;
 
-        static Image Img(string name, Transform parent, Color color, bool raycast = false)
+        internal static Image Img(string name, Transform parent, Color color, bool raycast = false)
         {
             var img = UIObj(name, parent).AddComponent<Image>();
             img.color = color;
@@ -409,7 +477,7 @@ namespace Voyager.EditorTools
             return img;
         }
 
-        static TextMeshProUGUI Txt(string name, Transform parent, string text, float size, TextAlignmentOptions align,
+        internal static TextMeshProUGUI Txt(string name, Transform parent, string text, float size, TextAlignmentOptions align,
                                    Color color, FontStyles style = FontStyles.Normal)
         {
             var t = UIObj(name, parent).AddComponent<TextMeshProUGUI>();
@@ -423,14 +491,14 @@ namespace Voyager.EditorTools
             return t;
         }
 
-        static void AutoSize(TextMeshProUGUI t, float min, float max)
+        internal static void AutoSize(TextMeshProUGUI t, float min, float max)
         {
             t.enableAutoSizing = true;
             t.fontSizeMin = min;
             t.fontSizeMax = max;
         }
 
-        static Button Btn(string name, Transform parent, string label, Color color, float fontSize)
+        internal static Button Btn(string name, Transform parent, string label, Color color, float fontSize)
         {
             var img = Img(name, parent, color, raycast: true);
             var b = img.gameObject.AddComponent<Button>();
@@ -444,7 +512,7 @@ namespace Voyager.EditorTools
             return b;
         }
 
-        static void Stretch(RectTransform rt, float left = 0, float right = 0, float top = 0, float bottom = 0)
+        internal static void Stretch(RectTransform rt, float left = 0, float right = 0, float top = 0, float bottom = 0)
         {
             rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one;
             rt.pivot = new Vector2(0.5f, 0.5f);
@@ -453,7 +521,7 @@ namespace Voyager.EditorTools
         }
 
         /// <summary>Franja pegada arriba: margen izq/der, distancia desde arriba y alto.</summary>
-        static void TopBand(RectTransform rt, float left, float right, float top, float height)
+        internal static void TopBand(RectTransform rt, float left, float right, float top, float height)
         {
             rt.anchorMin = new Vector2(0, 1); rt.anchorMax = new Vector2(1, 1);
             rt.pivot = new Vector2(0.5f, 1);
@@ -461,7 +529,7 @@ namespace Voyager.EditorTools
             rt.offsetMax = new Vector2(-right, -top);
         }
 
-        static void Place(RectTransform rt, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size)
+        internal static void Place(RectTransform rt, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size)
         {
             rt.anchorMin = rt.anchorMax = anchor;
             rt.pivot = pivot;
@@ -469,6 +537,6 @@ namespace Voyager.EditorTools
             rt.sizeDelta = size;
         }
 
-        static Color Hex(string hex) => ColorUtility.TryParseHtmlString("#" + hex, out var c) ? c : Color.magenta;
+        internal static Color Hex(string hex) => ColorUtility.TryParseHtmlString("#" + hex, out var c) ? c : Color.magenta;
     }
 }
