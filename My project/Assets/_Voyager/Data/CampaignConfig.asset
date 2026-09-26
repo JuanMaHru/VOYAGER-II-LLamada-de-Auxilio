@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b8d4d6a5d640b40b3ca51f59391e3b, type: 3}
+  m_Name: CampaignConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.CampaignConfig
+  database: {fileID: 11400000, guid: 0fd91b9f29693ce4194c63c3572b6f0e, type: 2}
+  regions:
+  - {fileID: 11400000, guid: 08af420e5fe8aff429ed5e9615e95e75, type: 2}
+  - {fileID: 11400000, guid: d3bab05d3c72bb449b448e0cda83bbae, type: 2}
+  - {fileID: 11400000, guid: 0687ec7eac5a479448336b58ff724e65, type: 2}
+  - {fileID: 11400000, guid: 5a230b5b65f690b41943a2864261ca52, type: 2}
+  stats:
+  - {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+  categories:
+  - {fileID: 11400000, guid: 2a3e3ca91514d7140b7e79c08ac8f291, type: 2}
+  - {fileID: 11400000, guid: 8760b27aed4f8754f9d83b436a543f04, type: 2}
+  - {fileID: 11400000, guid: b7e1c3d76d447bb469dd6b9c566e23d5, type: 2}
+  - {fileID: 11400000, guid: de1d12feccc72974b91ac9f47aef2cd0, type: 2}
+  - {fileID: 11400000, guid: 741e768c9fb2a374f9e398097057b61d, type: 2}
+  - {fileID: 11400000, guid: fc1e579513fee1d4c8231c14d5f4710f, type: 2}
+  - {fileID: 11400000, guid: c328b24400086454ea935d7b581e5bd0, type: 2}
+  - {fileID: 11400000, guid: 921e96963dc497e498fb57a01d551873, type: 2}
+  conditionPool: []
+  conditionGenerator:
+    demandChance: 0.6
+    maxDemands: 1
+    approveOwnChance: 0.5
+    relationIfFulfilled: 5
+    relationIfIgnored: -10
+    avoidAllOrNothing: 1
+    onSuccess:
+    - type: 2
+      amount: 5
+      region: {fileID: 0}
+      stat: {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+      flag: 
+      text: 
+      ending: {fileID: 0}
+      immediate: 0
+    onFail:
+    - type: 2
+      amount: -10
+      region: {fileID: 0}
+      stat: {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+      flag: 
+      text: 
+      ending: {fileID: 0}
+      immediate: 0
+    - type: 5
+      amount: 0
+      region: {fileID: 0}
+      stat: {fileID: 0}
+      flag: 
+      text: "El Comit\xE9 no est\xE1 conforme con tu jornada."
+      ending: {fileID: 0}
+      immediate: 0
+    onDemandFulfilled:
+    - type: 2
+      amount: 7
+      region: {fileID: 0}
+      stat: {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+      flag: 
+      text: 
+      ending: {fileID: 0}
+      immediate: 0
+    onDemandIgnored:
+    - type: 2
+      amount: -20
+      region: {fileID: 0}
+      stat: {fileID: 11400000, guid: 3284a4bfffca7074d8d8b683ea709ce7, type: 2}
+      flag: 
+      text: 
+      ending: {fileID: 0}
+      immediate: 0
+  days:
+  - label: "D\xEDa 1 - M\xFAsica"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: 2a3e3ca91514d7140b7e79c08ac8f291, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 1. Hoy los bloques discuten sobre: M\xFAsica."
+  - label: "D\xEDa 2 - Ejemplo de belleza humana"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: 8760b27aed4f8754f9d83b436a543f04, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 2. Hoy los bloques discuten sobre: Ejemplo de belleza humana."
+  - label: "D\xEDa 3 - Pel\xEDculas y series"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: b7e1c3d76d447bb469dd6b9c566e23d5, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 3. Hoy los bloques discuten sobre: Pel\xEDculas y series."
+  - label: "D\xEDa 4 - Lugares ic\xF3nicos"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: de1d12feccc72974b91ac9f47aef2cd0, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 4. Hoy los bloques discuten sobre: Lugares ic\xF3nicos."
+  - label: "D\xEDa 5 - Comida"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: 741e768c9fb2a374f9e398097057b61d, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 5. Hoy los bloques discuten sobre: Comida."
+  - label: "D\xEDa 6 - Animales"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: fc1e579513fee1d4c8231c14d5f4710f, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 6. Hoy los bloques discuten sobre: Animales."
+  - label: "D\xEDa 7 - Personas influyentes"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: c328b24400086454ea935d7b581e5bd0, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 7. Hoy los bloques discuten sobre: Personas influyentes."
+  - label: "D\xEDa 8 - Objetos"
+    proposalCount: 4
+    categoryMode: 1
+    fixedCategory: {fileID: 11400000, guid: 921e96963dc497e498fb57a01d551873, type: 2}
+    conditionMode: 3
+    fixedCondition: {fileID: 0}
+    distinctRegions: 0
+    allowedRegions: []
+    introText: "D\xEDa 8. Hoy los bloques discuten sobre: Objetos."
+  endings:
+  - {fileID: 11400000, guid: 3f00160b60854b748b0d9fb6a88d7630, type: 2}
+  - {fileID: 11400000, guid: 724a9a41fe985db4ea71bad5f16800a8, type: 2}
+  - {fileID: 11400000, guid: 0a7c62a3a2ad8334891b4c6f89529ed4, type: 2}
+  - {fileID: 11400000, guid: dae8d03b20a54dd469e46947437b7209, type: 2}
+  - {fileID: 11400000, guid: e78940a81d21bea47afd10fd9ca3af4b, type: 2}
+  - {fileID: 11400000, guid: 44f0c5b6cadf0ba4abb4d706e9a3fba0, type: 2}
+  - {fileID: 11400000, guid: f99f35aa3a11cf249b35083497c59ccc, type: 2}
+  - {fileID: 11400000, guid: 251c9da7c4b716249a6300865895bc08, type: 2}
+  - {fileID: 11400000, guid: 7c0a318e206700a4b85bf510b4f4ef51, type: 2}
+  - {fileID: 11400000, guid: 0ff8b59d2c6f6c74181d796729821a7c, type: 2}
+  - {fileID: 11400000, guid: 9f71de934f73bb440afde51d1800503e, type: 2}
+  - {fileID: 11400000, guid: b0e291c7d15801b44ab5b1b11427164c, type: 2}
+  - {fileID: 11400000, guid: 1a949eb36cb5cb748a28a46987eab9cc, type: 2}
+  - {fileID: 11400000, guid: 9fbbdefdd3768cd4682d06339ed2d3ed, type: 2}
+  - {fileID: 11400000, guid: 7a477c72c15173e458f41586d2c585f5, type: 2}
+  - {fileID: 11400000, guid: d998a7d4e4e651243b1df135b9c88b67, type: 2}
+  - {fileID: 11400000, guid: 65a009a912aab3d48b648072a076576c, type: 2}
+  - {fileID: 11400000, guid: 10803018bfa1b2f44bd4980a08c09c45, type: 2}
+  - {fileID: 11400000, guid: 3af218be73ae4954a93842dfdd94ccd5, type: 2}
+  - {fileID: 11400000, guid: dedda3bda12de504c9e348c4b05ec74e, type: 2}
+  - {fileID: 11400000, guid: c023c43a40d17994989fe50503c79bf5, type: 2}
+  - {fileID: 11400000, guid: 44b791f09d96c3c4f9acc7057e7d5f49, type: 2}
+  - {fileID: 11400000, guid: bf33e8faa04b0414a8820c5bf8e54223, type: 2}
+  - {fileID: 11400000, guid: e227d5f5e02d3bd4087707f03cf8f81b, type: 2}
+  defaultEnding: {fileID: 11400000, guid: e227d5f5e02d3bd4087707f03cf8f81b, type: 2}
+  avoidRepeatingCategories: 1
+  useFixedSeed: 0
+  seed: 12345

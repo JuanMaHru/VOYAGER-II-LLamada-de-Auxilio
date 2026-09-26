@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6873f867caf206142a6fa31ffd740c52, type: 3}
+  m_Name: Ending_PlanetaEuropa
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
+  id: planetaeuropa
+  displayName: El planeta museo
+  description: "Los alien\xEDgenas concluyen que la Tierra es un gran museo.\nLlegan
+    en tour, sacan fotos, se quejan de los precios y piden la entrada con descuento
+    de estudiante."
+  image: {fileID: 0}
+  priority: 200
+  requirements:
+    mode: 0
+    requirements:
+    - type: 19
+      comparison: 0
+      value: 7
+      stat: {fileID: 0}
+      region: {fileID: 11400000, guid: 5a230b5b65f690b41943a2864261ca52, type: 2}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 0}
+  showAlienReactions: 1
+  maxReactions: 3

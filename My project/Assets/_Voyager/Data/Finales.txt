@@ -1,0 +1,228 @@
+# ============================================================================
+#  FINALES DE VOYAGER II
+#
+#  Al terminar la partida se revisan los finales de MAYOR a MENOR prioridad y sale
+#  el primero que cumpla sus requisitos. A igual prioridad, gana el que está más arriba.
+#  Debajo del final se muestran hasta 3 reacciones de los alienígenas (Reacciones.txt).
+#
+#  Cómo se usa:
+#   1. Editá este archivo.
+#   2. En Unity: Voyager → Actualizar tolerancia, finales y reacciones
+#
+#  Formato de cada final:
+#   [NombreSinEspacios]              → crea la ficha Data/Endings/Ending_NombreSinEspacios
+#   titulo: Título que ve el jugador
+#   prioridad: 400
+#   modo: todas | alguna            → requisitos combinados con Y (todas) u O (alguna). Por defecto: todas
+#   texto: Una línea del texto final (podés poner varias líneas "texto:")
+#   reacciones: no                  → no mostrar reacciones alienígenas (ej: si la sonda nunca llegó)
+#   defecto: si                     → final que sale si no se cumple ningún otro (solo uno)
+#
+#  Requisitos posibles:
+#   aprobada: Nombre de la propuesta         (si el nombre se repite, usá categoria/Nombre)
+#   rechazada: Nombre de la propuesta
+#   aprobadas_de_region: eeuu >= 7           (en toda la partida)
+#   aprobadas_de_categoria: comida >= 3      (en toda la partida)
+#   stat: tolerancia >= 70
+#   relacion: europa <= -30
+#   alguna_region: <= -30                    (alguna región con relación <= -30)
+#   flag: despedido
+#   sin_flag: despedido
+#
+#  Operadores: >=  >  ==  !=  <=  <
+# ============================================================================
+
+# ---------------------------------------------------------------- DESPIDOS
+# La Tolerancia del Comité llegó a 0: la partida termina en ese momento.
+
+[MuerteMisteriosa]
+titulo: Muerte misteriosa
+prioridad: 1100
+reacciones: no
+flag: despedido
+alguna_region: <= -30
+texto: El Comité te retira la credencial. Esa misma noche, un bloque al que ignoraste demasiado te manda una canasta de frutas "de despedida".
+texto: A la mañana siguiente, el informe oficial dice: "causas naturales". Nadie en la NASA se anima a preguntar cuáles.
+
+[Despedido]
+titulo: ¡Despedido!
+prioridad: 1000
+reacciones: no
+flag: despedido
+texto: El Comité perdió la paciencia. Seguridad te acompaña hasta la puerta con tu caja de cartón y tu planta.
+texto: La Voyager II despega sin tu firma. Nunca vas a saber qué pensaron los extraterrestres.
+
+# ---------------------------------------------------------------- EL PEOR MENSAJE POSIBLE
+
+[EspeciePeligrosa]
+titulo: Especie peligrosa
+prioridad: 900
+aprobada: Adolfo Hituler
+texto: Los alienígenas abren la sonda y lo primero que encuentran es a Adolfo Hituler.
+texto: La cierran. La vuelven a abrir, por si se equivocaron. No se equivocaron.
+texto: La Tierra queda marcada como "especie peligrosa" en todos los mapas de la galaxia. La ayuda no va a llegar.
+
+# ---------------------------------------------------------------- COMBINACIONES SECRETAS (muy raras)
+
+[Superclasico]
+titulo: El Superclásico del universo
+prioridad: 600
+aprobada: La bombonera
+aprobada: El monumental
+texto: Los alienígenas encuentran la Bombonera y el Monumental en el mismo mensaje. Error fatal.
+texto: El planeta se divide en dos hinchadas. Mitad Boca, mitad River. Estalla la guerra civil.
+texto: Nadie viene a ayudarnos, pero el clásico se transmite a toda la galaxia y se agotan las entradas por mil años.
+
+[ConurbanoGalactico]
+titulo: Conurbano galáctico
+prioridad: 600
+aprobada: Constitución
+aprobada: Laferrere
+texto: Los alienígenas siguen las indicaciones del mensaje para aterrizar en Laferrere. Terminan en Constitución.
+texto: Se toman el Roca, se bajan en cualquier estación y nunca más se supo de ellos.
+texto: Dejan una reseña en internet: "cinco estrellas, muy auténtico".
+
+[OperativoDragonBall]
+titulo: Operativo Esferas del Dragón
+prioridad: 600
+aprobada: Goku
+aprobada: peliculas_series/Dragon Ball
+texto: Los alienígenas deciden curar la pandemia a la manera de la Tierra: juntando las siete esferas del dragón.
+texto: Encuentran una. Faltan seis. La búsqueda continúa. La pandemia también.
+
+[MecciOPenaldo]
+titulo: ¿Mecci o Penaldo?
+prioridad: 600
+aprobada: Lionel Mecci
+aprobada: Crisntiano Penaldo
+texto: Los alienígenas abren el debate: ¿Mecci o Penaldo?
+texto: Tres mil años después siguen discutiendo. La pandemia se termina sola mientras tanto.
+
+# ---------------------------------------------------------------- UNA PROPUESTA QUE LO CAMBIA TODO
+
+[Constitucion]
+titulo: Hora pico en Constitución
+prioridad: 400
+aprobada: Constitución
+texto: Los alienígenas eligen aterrizar en el lugar más famoso del mensaje: Constitución, un lunes a las 18.
+texto: Tres días después siguen buscando el andén del Roca. Concluyen que la Tierra es un laberinto y se vuelven a casa.
+
+[Monumental]
+titulo: Socios vitalicios
+prioridad: 400
+aprobada: El monumental
+texto: La nave aterriza en el Monumental en pleno partido. Sin querer, los alienígenas hacen la ola. 80.000 personas la siguen.
+texto: Se sienten tan bienvenidos que se quedan a vivir. Traen la cura de la pandemia... pero solo la reparten en la platea.
+
+[Bombonera]
+titulo: La nave late
+prioridad: 400
+aprobada: La bombonera
+texto: La nave aterriza en la Bombonera. El estadio late tan fuerte que el motor entra en resonancia.
+texto: Los alienígenas se van mareados, pero felices, y ahora son de Boca. La ayuda llega... cuando termine el partido.
+
+[ProtocoloPokebola]
+titulo: Protocolo Pokébola
+prioridad: 400
+modo: alguna
+aprobada: Pikachu
+aprobada: Bulbasaur
+aprobada: Chorizard
+texto: Los alienígenas concluyen que en la Tierra hay criaturas que caben en una pelota.
+texto: Llegan con millones de pokébolas. Humanos capturados: 0. Palomas capturadas: 3 millones.
+
+[CruceroTitanic]
+titulo: Crucero de lujo
+prioridad: 400
+aprobada: Titanic
+texto: Los alienígenas deciden visitarnos a lo grande: en el crucero espacial más lujoso jamás construido.
+texto: Nadie les avisó de los icebergs espaciales. Mandan un mensaje de auxilio. Ahora somos nosotros los que tenemos que ayudarlos.
+
+[AsadoInfinito]
+titulo: Sobremesa infinita
+prioridad: 400
+aprobada: Asado
+texto: Los alienígenas aterrizan un domingo al mediodía y los reciben con asado.
+texto: A las seis de la tarde siguen en la sobremesa. La ayuda llega, pero después del café.
+
+[SaludoM16]
+titulo: Saludo oficial
+prioridad: 400
+aprobada: M16
+texto: Los alienígenas encuentran un M16 en la sonda y lo interpretan como el saludo oficial de la Tierra.
+texto: Responden con el saludo oficial de su planeta, que es bastante más grande. Queda un cráter precioso en Nevada.
+
+[CapitanCarpincho]
+titulo: El tratado del Carpincho
+prioridad: 400
+aprobada: Carpincho
+texto: El carpincho les parece la criatura más evolucionada del planeta: tranquila, sociable y siempre en el agua.
+texto: Firman el tratado de paz con los carpinchos de Nordelta. A los humanos no nos invitan.
+
+[JuegoAmistoso]
+titulo: Un juego amistoso
+prioridad: 400
+aprobada: Squid Game
+texto: Los alienígenas quedan fascinados con Squid Game e invitan a la humanidad a "un juego amistoso".
+texto: Llegan con 456 buzos verdes y una muñeca gigante. Nadie quiere jugar a "luz roja, luz verde".
+
+[EmperatrizKitty]
+titulo: Su Majestad Hello Kitty
+prioridad: 400
+aprobada: Hello Kitty
+texto: Los alienígenas se enamoran de Hello Kitty y la coronan emperatriz de la galaxia.
+texto: La Tierra pasa a ser una provincia del Imperio Kitty. La pandemia se cura, pero todo es rosa.
+
+[ManoDeDios]
+titulo: La Mano de Dios
+prioridad: 400
+aprobada: Diego Maradoga
+texto: Los alienígenas ven el gol con la mano y lo declaran religión oficial.
+texto: Mandan la cura de la pandemia, pero la entregan con la mano. Nadie se anima a cobrarles la falta.
+
+# ---------------------------------------------------------------- EL MENSAJE QUEDÓ DESBALANCEADO
+
+[PlanetaEEUU]
+titulo: Bienvenidos al Planeta Estados Unidos
+prioridad: 200
+aprobadas_de_region: eeuu >= 7
+texto: Los alienígenas revisan el mensaje y concluyen que la Tierra se llama "Estados Unidos".
+texto: Mandan la respuesta a Washington y preguntan si el resto del planeta son "estados asociados".
+
+[PlanetaAsia]
+titulo: El planeta del anime
+prioridad: 200
+aprobadas_de_region: asia >= 7
+texto: Los alienígenas concluyen que toda la Tierra habla japonés y coreano y vive dentro de un anime.
+texto: Llegan con el pelo parado y gritando el nombre de sus ataques.
+
+[PlanetaLatam]
+titulo: Fiesta en el planeta
+prioridad: 200
+aprobadas_de_region: america_latina >= 7
+texto: Los alienígenas concluyen que la Tierra es una fiesta permanente.
+texto: Llegan con ganas de bailar, se quedan de sobremesa y a los tres meses piden la ciudadanía.
+
+[PlanetaEuropa]
+titulo: El planeta museo
+prioridad: 200
+aprobadas_de_region: europa >= 7
+texto: Los alienígenas concluyen que la Tierra es un gran museo.
+texto: Llegan en tour, sacan fotos, se quejan de los precios y piden la entrada con descuento de estudiante.
+
+# ---------------------------------------------------------------- FINAL PRINCIPAL Y POR DEFECTO
+
+[Principal]
+titulo: La respuesta
+prioridad: 100
+stat: tolerancia >= 70
+texto: El Comité aprueba el mensaje con aplausos. Meses después, los alienígenas encuentran la Voyager II.
+texto: Lo que ven les gusta: una especie rara, contradictoria y ruidosa, pero con cosas que vale la pena salvar.
+texto: La respuesta llega en forma de un mensaje corto: "Vamos en camino".
+
+[Default]
+titulo: Silencio en el cosmos
+prioridad: 0
+defecto: si
+texto: La Voyager II parte con el mensaje de la humanidad. Los alienígenas la encuentran, la abren, la miran un rato largo...
+texto: ...y la vuelven a cerrar. Nunca responden. En la NASA todavía discuten si fue algo que dijimos.

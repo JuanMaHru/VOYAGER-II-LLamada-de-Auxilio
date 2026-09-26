@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6873f867caf206142a6fa31ffd740c52, type: 3}
+  m_Name: Ending_MecciOPenaldo
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
+  id: mecciopenaldo
+  displayName: "\xBFMecci o Penaldo?"
+  description: "Los alien\xEDgenas abren el debate: \xBFMecci o Penaldo?\nTres mil
+    a\xF1os despu\xE9s siguen discutiendo. La pandemia se termina sola mientras tanto."
+  image: {fileID: 0}
+  priority: 600
+  requirements:
+    mode: 0
+    requirements:
+    - type: 17
+      comparison: 0
+      value: 0
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 11400000, guid: 15e623bbc4355424b8f42b479432d93f, type: 2}
+    - type: 17
+      comparison: 0
+      value: 0
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+      proposal: {fileID: 11400000, guid: 00526ddc01413604a881804c55228983, type: 2}
+  showAlienReactions: 1
+  maxReactions: 3

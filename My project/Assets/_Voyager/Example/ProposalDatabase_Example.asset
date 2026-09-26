@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa312d7a0ef1794abf2a05e67f0e356, type: 3}
+  m_Name: ProposalDatabase_Example
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.ProposalDatabase
+  proposals:
+  - {fileID: 11400000, guid: 4aa7cb265db899d42b7039bd2f11d084, type: 2}
+  - {fileID: 11400000, guid: c4e0afb0737f602408a64326cc0397ef, type: 2}
+  - {fileID: 11400000, guid: ea16a2c0781dd5d4b8ef3d6d74e13cd5, type: 2}
+  - {fileID: 11400000, guid: 91ef3c0d3be0578428fe71a898432510, type: 2}
+  - {fileID: 11400000, guid: 338ad04a68b5e504db416097dff9e82c, type: 2}

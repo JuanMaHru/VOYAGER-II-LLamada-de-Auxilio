@@ -1,0 +1,67 @@
+# ============================================================================
+#  LISTA DE PROPUESTAS DE VOYAGER II
+#
+#  Cómo se usa:
+#   1. Editá esta lista (agregá o quitá nombres).
+#   2. En Unity: Voyager → Cargar propuestas desde Propuestas.txt
+#   3. Se crea una ficha por cada nombre nuevo, con puntos sorteados UNA vez.
+#      Las fichas que ya existen NO se tocan (si les cambiaste los puntos, se respetan).
+#      Si borrás un nombre de acá, su ficha NO se borra: borrala a mano en Data/Proposals.
+#
+#  Formato:
+#   [id_de_categoria]
+#   id_de_region: Propuesta 1, Propuesta 2, Propuesta 3
+#
+#  Categorías: musica, belleza_humana, peliculas_series, lugares_iconicos,
+#              comida, animales, personas_influyentes, objetos
+#  Regiones:   asia, eeuu, america_latina, europa
+#  Las líneas que empiezan con # se ignoran.
+# ============================================================================
+
+[musica]
+asia: BTS, Black Pink, Stray Kids, GangNamStyle, Duvet, Blue Bird (Naruto Shippuden), Dynamite BTS, Dragon Ball opening
+eeuu: Michael Jackson, Taylor Swift, Drake, Travis Scott, Justin Bieber, Snoop Dog, Gun n Roses
+america_latina: Los palmeras, Duki, Karina la princesita, J balvin, Maluma, Ozuna, El polaco, La champions Liga, Bad Bunny, Anuel, Shakira, El Peipper
+europa: Los Beatles, Black Bird(SONG), One Direction, Oasis, Wonderwall, Queen, The Rolling Stones, SADE
+
+[belleza_humana]
+asia: JungKook, Jackie Chan, Shigeru Miyamoto, Yoko Ono, Jisoo (Black Pink), Tzuyu(Twice), Karina (Aespa), Akira Toriyama, Nayeon(Twice), Momo(Twice)
+eeuu: Harry Styles, Adam Sandler, Justin Bieber, Ana de Armas, Zendaya, Brad Pitt(PRIME), Michael B Jordan, Timothée Chalamet, Di Caprio(PRIME), Anne Hathaway, Alexandra Daddario, Lana Rhoades, Dicaprio Actual, Rachel McAdams
+america_latina: Emilia mernes, Antonela Roccuzzo, Pampita, Coty Romero, Leandro Paredes, Peter Lanzani (PRIME), Hernan Drago(PRIME), Hernan Drago(Actual), Rodrigo De Paul, Vero Buffone, Paulo Dybala, Luisana Lopilato(PRIME(Siempre)), La profe de ingles, Pablito Lezcano, Sol Perez, Moria Casan
+europa: Alejandro Isak, Tom Holland, Tom Hiddleston, Gareth Bale, Christian Bale, Mads Mikkelsen
+
+[peliculas_series]
+asia: Squid Game, Parasite, Alice in borderland, gisaeng chung, drive my car, Dragon Ball, One Piece, Naruto, Boku no Hero, Dangal (India), Puka, Battle Royale, True Beauty, Crash Landing on You, Hello Kitty, Saylor Moon
+eeuu: Fight Club, El Padrino, Breaking Bad, Interstellar, Stranger Things, Pulp Fiction, Inception, Titanic, Friends, Dragonball Evolution, Monster HIgh
+america_latina: El Marginal, Los Simuladores, Casados con Hijos, Patito Feo, Relatos Salvajes, Argentina 1985
+europa: La Casa de Papel, Peaky Blinders, Elite, Sherlock, Dark, Ragnarok, Gladiator, Harry Potter
+
+[lugares_iconicos]
+asia: Burj Khalifa, la Muralla China, Taj Mahal, el Monte Fuji, Petra, La Ciudad Prohibida, La Torre de Tokio, Keio Yochisha Elementary School
+eeuu: La Estatua de la Libertad, Times Square, La Casa Blanca, El Cartel De Hollywood, El Empire State
+america_latina: Machu Picchu, El Cristo Redentor, Las Cataratas del Iguazú, El Amazonas, Teatro Colón, Isla Galápagos, La bombonera, El monumental, Laferrere, Bosque de palermo, Constitución
+europa: La Torre Eiffel, El Coliseo Romano, Big Ben, La Sagrada Familia, El Museo del Louvre, La Torre de Pisa
+
+[comida]
+asia: Sushi, Sashimi, Ramen, Pad Thai, Arroz blanco, Fideos, Dumplings, Perros, Gatos
+eeuu: Hamburguesa, Costillas con salsa barbacoa, Pollo Frito, Pizza de Pepperoni, Panqueques, Apple Pie, HotDog, Fentanilo, Crazy Brownie
+america_latina: Asado, Tacos, Ceviche, Empanadas, Arepas, Milanesas, Guacamole
+europa: Pizza de Muzzarella, Paella, Croissants, Helado, Fondue, Goulash, HotDog, Hongos, Tallarines
+
+[animales]
+asia: Oso Panda, Tigre de Bengala, Dragón de Komodo, Panda Rojo, Cobra Real, Pikachu, Yoshi, Bulbasaur, Donkey kong, Pochita
+eeuu: Águila, Bisonte, Oso Pardo, Mapache, Puma, Alce, Zarigüeya, Castor, Víbora de cascabel, Benjamín Netanyahu
+america_latina: Yaguareté, Llama, Carpincho, Tucán, Perezoso, Cóndor, Anaconda, Oso Hormiguero, Pipita Higuain(PERRO), Miauricio Gato
+europa: Lobo, Ciervo, Zorro, Lince, Jabalí, Tejón, Erizo, Nutria, Cisne
+
+[personas_influyentes]
+asia: Buda, Bruce Lee, Heung-Min Son, Goku, Vegeta, Bulma, Naruto, Hiraoka, Androide n18, Pijachu, Ash Ketchup, Chorizard, Mario Bros, Luigi
+eeuu: Charlie Kirk, Jeff Einstein, D Piddy, algún actor que no tenga denuncia, Ronald Dump, George Washingdown, Steve Jobs, Elon Mask, Ezra Miller, Jonatan Majors
+america_latina: El Che Guevara, Lionel Mecci, Diego Maradoga, El Papa Francisco, Alonso Mazza Yatra, Tini, Patricia Bullrich, Juan Domingo Berón, Carlos Saul Memen, Chapo Guzman, Ronaldinho, Vinicius chunior, Neymal Junior, Miriam Breghman, Nico del Caño, Cristina  kirchner, Nati Gota, Mirtha Legrand
+europa: Napoleón Bonaparte, William Shakespeare, Leonardo da Pinci, Adolfo Hituler, Isaac Newton, Crisntiano Penaldo, Mussolini, Lenin, Stalin, Alexander Isak, Yamile Lamal, Kilian Mpappe
+
+[objetos]
+asia: Katana, Bonsái, Kimono, Origami, Palitos chinos, Auto Eléctrico
+eeuu: Iphone, Jeans, Skate, Bate de Béisbol, Barbie, M16
+america_latina: Mate, Poncho, Hamaca Paraguaya, Maracas, Sombrero Mexicano
+europa: Gaita, Boina, Góndola, Pollera Escosesa, Vespa, Corona, Violín

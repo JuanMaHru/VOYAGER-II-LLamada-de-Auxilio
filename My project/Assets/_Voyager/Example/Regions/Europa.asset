@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f558c31cf2dad8f429cf725319acd9e7, type: 3}
+  m_Name: Europa
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.RegionData
+  id: 
+  displayName: Europa
+  icon: {fileID: 0}
+  color: {r: 0.25, g: 0.4, b: 0.85, a: 1}
+  initialRelation: 0
+  minRelation: -100
+  maxRelation: 100
+  useCriticalThreshold: 1
+  criticalThreshold: -10
+  onCritical:
+  - type: 5
+    amount: 0
+    region: {fileID: 0}
+    stat: {fileID: 0}
+    flag: 
+    text: "Europa retira a su embajador del proyecto Voyager en se\xF1al de protesta."
+    ending: {fileID: 0}
+  - type: 2
+    amount: -5
+    region: {fileID: 0}
+    stat: {fileID: 11400000, guid: 24212848e6142bd49acb4003098a5aae, type: 2}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  - type: 3
+    amount: 0
+    region: {fileID: 0}
+    stat: {fileID: 0}
+    flag: europa_ofendida
+    text: 
+    ending: {fileID: 0}

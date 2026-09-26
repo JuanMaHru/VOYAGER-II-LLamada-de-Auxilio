@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6873f867caf206142a6fa31ffd740c52, type: 3}
+  m_Name: Ending_Despedido
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
+  id: despedido
+  displayName: "\xA1Despedido!"
+  description: "El Comit\xE9 perdi\xF3 la paciencia. Seguridad te acompa\xF1a hasta
+    la puerta con tu caja de cart\xF3n y tu planta.\nLa Voyager II despega sin tu
+    firma. Nunca vas a saber qu\xE9 pensaron los extraterrestres."
+  image: {fileID: 0}
+  priority: 1000
+  requirements:
+    mode: 0
+    requirements:
+    - type: 15
+      comparison: 0
+      value: 0
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: despedido
+      proposal: {fileID: 0}
+  showAlienReactions: 0
+  maxReactions: 3

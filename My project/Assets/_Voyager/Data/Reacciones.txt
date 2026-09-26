@@ -1,0 +1,146 @@
+# ============================================================================
+#  REACCIONES DE LOS ALIENÍGENAS
+#
+#  Cuando la partida termina, los alienígenas encuentran la sonda y reaccionan a
+#  algunas de las propuestas que APROBASTE (hasta 3, elegidas al azar).
+#  Así cada partida tiene un final distinto según lo que elegiste.
+#
+#  Cómo se usa:
+#   1. Editá esta lista (agregá, cambiá o borrá reacciones).
+#   2. En Unity: Voyager → Actualizar tolerancia, finales y reacciones
+#
+#  Formato:
+#   [id_de_categoria]
+#   id_de_region: Nombre EXACTO de la propuesta (como en Propuestas.txt) = reacción
+#
+#  Las propuestas sin reacción simplemente no aparecen en esa lista del final.
+#  Las líneas que empiezan con # se ignoran.
+# ============================================================================
+
+[musica]
+asia: BTS = Forman un fandom de siete millones de tentáculos y exigen una gira por Andrómeda.
+asia: GangNamStyle = Intentan traducir el baile. El resultado es una declaración de guerra muy elegante.
+asia: Dragon Ball opening = La adoptan como himno militar. Nadie en la galaxia vuelve a atacarlos.
+eeuu: Michael Jackson = Intentan hacer el moonwalk con seis piernas. Tres terminan esguinzadas.
+eeuu: Taylor Swift = Le escriben una carta de amor. Ella les responde con un álbum entero sobre la ruptura.
+eeuu: Snoop Dog = Preguntan qué es esa planta verde que aparece en todos los videos.
+america_latina: Shakira = Estudian sus caderas durante años. Concluyen, científicamente, que no mienten.
+america_latina: Bad Bunny = No entienden ni una palabra, pero igual lo cantan a los gritos.
+america_latina: La champions Liga = Descubren el cuarteto y bailan en ronda durante tres siglos.
+america_latina: Duki = Intentan hacer un freestyle y pierden la batalla contra un satélite.
+america_latina: Los palmeras = Arman un baile en la nave. Todavía no terminó.
+europa: Los Beatles = Bautizan a la Tierra "el planeta del submarino amarillo".
+europa: Queen = Adoptan "We Will Rock You" como protocolo de aterrizaje: dos golpes y un aplauso.
+europa: One Direction = Preguntan por qué se separaron. Nadie en la Tierra supo explicarlo.
+europa: Wonderwall = Un alienígena con guitarra la toca en todas las fiestas. Lo odian.
+
+[belleza_humana]
+eeuu: Adam Sandler = Concluyen que los humanos van a ceremonias formales con shorts de básquet.
+eeuu: Zendaya = La nombran embajadora oficial de la Tierra. Ella no puede: tiene rodaje.
+eeuu: Timothée Chalamet = Lo confunden con un príncipe del desierto y le mandan un gusano de arena de regalo.
+asia: Jackie Chan = Intentan imitar sus escenas de acción. La enfermería de la nave colapsa.
+asia: Shigeru Miyamoto = Lo contratan para diseñar el nivel final de su planeta.
+america_latina: Moria Casan = Aprenden la expresión "lengua karateca" y la usan en todos sus discursos diplomáticos.
+america_latina: La profe de ingles = Le mandan la tarea hecha. Igual les pone un 4.
+america_latina: Pampita = Le ofrecen conducir el noticiero intergaláctico.
+europa: Mads Mikkelsen = Lo ven y deciden no invadir: "ese humano parece peligroso".
+europa: Tom Holland = Buscan al Hombre Araña para reclutarlo. Encuentran a Tom Holland haciendo prensa.
+
+[peliculas_series]
+eeuu: Titanic = Planean visitarnos en un crucero de lujo. Nadie les avisa de los icebergs.
+eeuu: Interstellar = Entienden la física perfectamente. La trama, no.
+eeuu: Breaking Bad = Mandan a un químico a la Tierra "por negocios".
+eeuu: Friends = Buscan el departamento de Monica. Ven los alquileres de Nueva York y se vuelven.
+eeuu: Dragonball Evolution = La consideran un acto hostil. La Tierra va a tener que pedir disculpas.
+eeuu: Monster HIgh = Creen que la Tierra ya está llena de monstruos y se sienten como en casa.
+asia: Squid Game = Invitan a la humanidad a un "juego amistoso". Traen 456 buzos verdes.
+asia: Hello Kitty = La nombran emperatriz de la galaxia. No tiene boca, así que nunca se queja.
+asia: Naruto = Aprenden a correr con los brazos para atrás. La nave se estrella.
+asia: Parasite = Lo interpretan como un manual y se instalan en el sótano de la NASA.
+america_latina: Los Simuladores = Intentan resolver la pandemia con un operativo de Los Simuladores. Funciona.
+america_latina: Casados con Hijos = Concluyen que todas las familias humanas viven en guerra. Aciertan.
+america_latina: Argentina 1985 = Quedan tan impresionados que llevan a juicio a su propio emperador.
+america_latina: Patito Feo = Se dividen en Las Populares y Las Divinas. Guerra civil.
+europa: Harry Potter = Mandan una lechuza con la invitación a Hogwarts. La lechuza pide asilo en la Tierra.
+europa: La Casa de Papel = Se ponen máscaras de Dalí y asaltan la Casa de la Moneda de Marte.
+europa: Gladiator = Preguntan "¿no se divierten?" en cada reunión diplomática.
+
+[lugares_iconicos]
+america_latina: Constitución = Aterrizan en Constitución en hora pico. Tres días después siguen buscando el andén del Roca.
+america_latina: El monumental = Se hacen hinchas de River y piden ser socios vitalicios.
+america_latina: La bombonera = Se hacen hinchas de Boca. La nave empieza a latir.
+america_latina: Laferrere = Intentan ubicar Laferrere en el mapa. Concluyen que es otro planeta.
+america_latina: Teatro Colón = Organizan una ópera de bienvenida de catorce horas. Los humanos se duermen en el segundo acto.
+america_latina: Las Cataratas del Iguazú = Las quieren usar para lavar la nave.
+america_latina: Machu Picchu = Reconocen la arquitectura: "esto lo hicimos nosotros hace siglos".
+america_latina: Bosque de palermo = Salen a correr alrededor de los lagos y no paran nunca más.
+eeuu: La Casa Blanca = Aterrizan en el jardín para pedir una reunión. Les dan turno para dentro de cuatro años.
+eeuu: El Cartel De Hollywood = Le agregan letras para que diga el nombre de su planeta.
+eeuu: La Estatua de la Libertad = Le preguntan por qué sostiene un helado.
+asia: Burj Khalifa = Lo usan de estacionamiento para la nave.
+asia: la Muralla China = La ven desde el espacio, tal como dice el mito. Primer contacto confirmado.
+asia: Keio Yochisha Elementary School = Mandan a sus hijos de intercambio. Vuelven haciendo reverencias.
+europa: La Torre de Pisa = La enderezan como gesto de buena voluntad. Italia les declara la guerra.
+europa: La Torre Eiffel = La usan como antena. Captan radio francesa las 24 horas.
+europa: El Museo del Louvre = Se llevan la Gioconda "para estudiarla". Nunca la devuelven.
+europa: Big Ben = Sincronizan sus relojes con el Big Ben y llegan cinco minutos tarde a todo.
+
+[comida]
+america_latina: Asado = Llegan con hambre a un asado. A las 4 de la mañana siguen esperando el vacío.
+america_latina: Milanesas = Descubren la milanesa napolitana y la declaran patrimonio galáctico.
+america_latina: Empanadas = Se pelean para siempre sobre si llevan pasas o no.
+america_latina: Guacamole = Confunden el guacamole con la sangre de su especie. Momento tenso.
+eeuu: Hamburguesa = Piden una hamburguesa "tamaño Estados Unidos" y la confunden con un asteroide.
+eeuu: Pizza de Pepperoni = Italia se ofende por la pizza estadounidense. Primer conflicto diplomático interplanetario.
+eeuu: Crazy Brownie = Nadie les explicó qué tenía el brownie. El informe de la misión dice solo "colores".
+asia: Sushi = Les encanta. Preguntan si los humanos también se comen crudos.
+asia: Ramen = Descubren el ramen instantáneo y dejan de buscar vida inteligente.
+europa: Pizza de Muzzarella = Aprueban la pizza. Rechazan el ananá. Por fin algo en común con la humanidad.
+europa: Fondue = Meten los tentáculos en el queso derretido. Error.
+europa: Croissants = Intentan pronunciar "croissant". Se abre un agujero negro.
+
+[animales]
+america_latina: Carpincho = Declaran al carpincho especie superior del planeta y negocian solo con ellos.
+america_latina: Pipita Higuain(PERRO) = Le preguntan por la final de 2014. No contesta.
+america_latina: Yaguareté = Lo nombran capitán de la nave. Nadie se anima a contradecirlo.
+asia: Pikachu = Intentan capturar a la humanidad con pokébolas.
+asia: Oso Panda = Financian toda la reproducción de los pandas. Los pandas no colaboran.
+asia: Donkey kong = Llegan tirando barriles "para saludar".
+eeuu: Águila = Creen que el águila es la presidenta de Estados Unidos.
+eeuu: Mapache = Un mapache se mete en la nave de vuelta y termina gobernando su planeta.
+europa: Erizo = Lo confunden con Sonic y le piden que corra más rápido.
+europa: Cisne = Descubren que el cisne muerde. Retiran la oferta de amistad.
+
+[personas_influyentes]
+america_latina: Lionel Mecci = Lo abducen para su selección y ganan el Mundial intergaláctico.
+america_latina: Diego Maradoga = Adoptan la "Mano de Dios" como religión oficial.
+america_latina: El Papa Francisco = Lo invitan a dar misa en Andrómeda. La da en lunfardo.
+america_latina: Ronaldinho = Le piden una gambeta. Todavía están buscando la pelota.
+america_latina: Mirtha Legrand = Los invita a almorzar y termina preguntándoles la edad.
+asia: Goku = Llegan buscando las esferas del dragón. Se llevan siete pelotas de pelotero.
+asia: Buda = Alcanzan la iluminación y deciden no hacer nada. Tampoco ayudarnos.
+asia: Mario Bros = Buscan a la princesa en todos los castillos de Europa.
+asia: Ash Ketchup = Le preguntan cuándo va a cumplir 11 años.
+eeuu: Steve Jobs = Mandan su respuesta en un formato que solo se abre con un adaptador de 90 dólares.
+eeuu: Elon Mask = Él les ofrece colonizar Marte. Ellos ya viven ahí.
+eeuu: George Washingdown = Ven su cara en el billete de un dólar y deciden que es el dios de la Tierra.
+europa: Isaac Newton = Le mandan una manzana de regalo. Cae para arriba.
+europa: William Shakespeare = Responden en verso. Tardan 400 años en entenderse.
+europa: Napoleón Bonaparte = Planean invadir la Tierra en invierno. Mala idea.
+europa: Leonardo da Pinci = Encuentran los planos de sus máquinas voladoras y las fabrican. Funcionan.
+europa: Adolfo Hituler = Lo ven en el mensaje y activan el protocolo "especie peligrosa".
+europa: Crisntiano Penaldo = Discuten con los fans de Mecci. La guerra de las galaxias era esto.
+
+[objetos]
+america_latina: Mate = Descubren el mate. Viajan a la Tierra solo para preguntar dónde se compra yerba.
+america_latina: Sombrero Mexicano = Lo usan como plato volador.
+america_latina: Hamaca Paraguaya = Duermen la siesta en la hamaca y se olvidan de la misión.
+eeuu: M16 = Lo interpretan como un regalo de bienvenida y responden con el suyo. Es más grande.
+eeuu: Iphone = Intentan cargarlo. No tienen el cargador.
+eeuu: Barbie = Nos devuelven una Barbie alienígena de tres metros: "Barbie Invasora".
+asia: Katana = Cortan la cinta de inauguración de la embajada con la katana. Y la embajada.
+asia: Origami = Doblan su nave en forma de grulla.
+europa: Vespa = Llegan en una Vespa espacial y estacionan en la vereda.
+europa: Corona = Creen que la Corona es el gobierno mundial y mandan la carta al Palacio de Buckingham.
+europa: Gaita = Escuchan la gaita y confirman que en la Tierra hay criaturas sufriendo.
+europa: Pollera Escosesa = Preguntan qué se usa debajo. Nadie responde.

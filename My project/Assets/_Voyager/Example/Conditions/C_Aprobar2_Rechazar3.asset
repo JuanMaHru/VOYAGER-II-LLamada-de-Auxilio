@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b13bf7dddb3ef4d9bccc51432eb004, type: 3}
+  m_Name: C_Aprobar2_Rechazar3
+  m_EditorClassIdentifier: Assembly-CSharp::Voyager.DailyConditionData
+  id: 
+  displayName: 
+  playerText: "El presupuesto es limitado: deb\xE9s aprobar exactamente 2 propuestas
+    y rechazar 3."
+  requirements:
+    mode: 0
+    requirements:
+    - type: 4
+      comparison: 2
+      value: 2
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+    - type: 5
+      comparison: 2
+      value: 3
+      stat: {fileID: 0}
+      region: {fileID: 0}
+      category: {fileID: 0}
+      flag: 
+  onSuccess:
+  - type: 2
+    amount: 3
+    region: {fileID: 0}
+    stat: {fileID: 11400000, guid: 24212848e6142bd49acb4003098a5aae, type: 2}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  - type: 5
+    amount: 0
+    region: {fileID: 0}
+    stat: {fileID: 0}
+    flag: 
+    text: "El Consejo aprueba tu gesti\xF3n del presupuesto."
+    ending: {fileID: 0}
+  onFail:
+  - type: 1
+    amount: -5
+    region: {fileID: 0}
+    stat: {fileID: 0}
+    flag: 
+    text: 
+    ending: {fileID: 0}
+  - type: 5
+    amount: 0
+    region: {fileID: 0}
+    stat: {fileID: 0}
+    flag: 
+    text: "El Consejo te acusa de desorganizaci\xF3n. Todas las regiones pierden
+      confianza."
+    ending: {fileID: 0}
