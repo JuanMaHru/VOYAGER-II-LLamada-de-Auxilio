@@ -109,36 +109,52 @@ namespace Voyager
             var basePool = GetAvailable(state, req.allowedRegions);
             var picks = new List<ProposalData>();
 
-            // 1) Garantías (D4)
-            foreach (var region in req.mustIncludeRegions)
+            // 1. Identificamos todas las regiones válidas para este turno.
+            // Si hay regiones permitidas específicas, usamos esas. Si no, detectamos todos los bloques activos.
+            var regionesParaTurno = new HashSet<RegionData>();
+            if (req.allowedRegions != null && req.allowedRegions.Count > 0)
             {
-                if (picks.Count >= req.count) break;
-                var r = region;
-                var p = PickOne(basePool, picks, req, x => x.region == r, rng, ignoreDistinct: true);
-                if (p != null) picks.Add(p);
-                else GameLog.Warn($"No hay propuestas disponibles de '{r?.DisplayName}' para garantizar la condición del día.");
+                foreach (var r in req.allowedRegions) regionesParaTurno.Add(r);
             }
-            foreach (var category in req.mustIncludeCategories)
+            else
             {
-                if (picks.Count >= req.count) break;
-                var c = category;
-                var p = PickOne(basePool, picks, req, x => x.category == c, rng, ignoreDistinct: true);
-                if (p != null) picks.Add(p);
-                else GameLog.Warn($"No hay propuestas disponibles de '{c?.DisplayName}' para garantizar la condición del día.");
+                foreach (var p in basePool)
+                {
+                    if (p.region != null) regionesParaTurno.Add(p.region);
+                }
             }
 
-            // 2) Relleno normal
-            while (picks.Count < req.count)
+            // 2. Extraemos exactamente UNA propuesta por cada bloque/región.
+            foreach (var region in regionesParaTurno)
             {
-                var p = PickOne(basePool, picks, req, null, rng, ignoreDistinct: false);
-                if (p == null) break;
-                picks.Add(p);
+                var candidatosRegion = new List<ProposalData>();
+
+                // Filtramos el pool para quedarnos solo con las propuestas de este bloque y de la categoría elegida
+                foreach (var p in basePool)
+                {
+                    if (p.region == region && (req.category == null || p.category == req.category))
+                    {
+                        candidatosRegion.Add(p);
+                    }
+                }
+
+                // Si este bloque tiene propuestas para proponer hoy, elegimos una y la metemos al sobre
+                if (candidatosRegion.Count > 0)
+                {
+                    var elegida = WeightedPick(candidatosRegion, rng);
+                    picks.Add(elegida);
+                }
+                else
+                {
+                    // Aviso en consola si un continente se quedó sin opciones para esta categoría
+                    string catName = req.category != null ? req.category.DisplayName : "Cualquiera";
+                    GameLog.Warn($"No hay propuestas disponibles de '{region.DisplayName}' para la categoría '{catName}'.");
+                }
             }
 
-            if (picks.Count < req.count)
-                GameLog.Warn($"Solo se pudieron generar {picks.Count}/{req.count} propuestas: el mazo no tiene más disponibles.");
+            // 3. Mezclamos los sobres para que no lleguen siempre en el mismo orden geopolítico.
+            Shuffle(picks, rng);
 
-            Shuffle(picks, rng); // para que las garantizadas no queden siempre primeras
             return picks;
         }
 
