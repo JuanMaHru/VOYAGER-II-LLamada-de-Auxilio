@@ -88,7 +88,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: 2a3e3ca91514d7140b7e79c08ac8f291, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 1. Hoy los bloques discuten sobre: M\xFAsica."
   - label: "D\xEDa 2 - Ejemplo de belleza humana"
@@ -97,7 +97,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: 8760b27aed4f8754f9d83b436a543f04, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 2. Hoy los bloques discuten sobre: Ejemplo de belleza humana."
   - label: "D\xEDa 3 - Pel\xEDculas y series"
@@ -106,7 +106,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: b7e1c3d76d447bb469dd6b9c566e23d5, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 3. Hoy los bloques discuten sobre: Pel\xEDculas y series."
   - label: "D\xEDa 4 - Lugares ic\xF3nicos"
@@ -115,7 +115,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: de1d12feccc72974b91ac9f47aef2cd0, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 4. Hoy los bloques discuten sobre: Lugares ic\xF3nicos."
   - label: "D\xEDa 5 - Comida"
@@ -124,7 +124,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: 741e768c9fb2a374f9e398097057b61d, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 5. Hoy los bloques discuten sobre: Comida."
   - label: "D\xEDa 6 - Animales"
@@ -133,7 +133,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: fc1e579513fee1d4c8231c14d5f4710f, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 6. Hoy los bloques discuten sobre: Animales."
   - label: "D\xEDa 7 - Personas influyentes"
@@ -142,7 +142,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: c328b24400086454ea935d7b581e5bd0, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 7. Hoy los bloques discuten sobre: Personas influyentes."
   - label: "D\xEDa 8 - Objetos"
@@ -151,7 +151,7 @@ MonoBehaviour:
     fixedCategory: {fileID: 11400000, guid: 921e96963dc497e498fb57a01d551873, type: 2}
     conditionMode: 3
     fixedCondition: {fileID: 0}
-    distinctRegions: 0
+    distinctRegions: 1
     allowedRegions: []
     introText: "D\xEDa 8. Hoy los bloques discuten sobre: Objetos."
   endings:
