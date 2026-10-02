@@ -18,7 +18,7 @@ MonoBehaviour:
     y coreano y vive dentro de un anime.\nLlegan con el pelo parado y gritando el
     nombre de sus ataques."
   image: {fileID: 0}
-  priority: 200
+  priority: 400
   requirements:
     mode: 0
     requirements:

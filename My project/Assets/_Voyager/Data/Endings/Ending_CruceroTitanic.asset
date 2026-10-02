@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: crucerotitanic
   displayName: Crucero de lujo
-  description: "Los alien\xEDgenas deciden visitarnos a lo grande: en el crucero
-    espacial m\xE1s lujoso jam\xE1s construido.\nNadie les avis\xF3 de los icebergs
-    espaciales. Mandan un mensaje de auxilio. Ahora somos nosotros los que tenemos
-    que ayudarlos."
+  description: 'Los alienigenas terminan enojados por la muerte de Jack, ya que creen
+    que los dos hubiesen podido sobrevivir, subiendo los dos sobre la tabla. Quedan
+    muertos en llanto y se van sin ayudarnos. '
   image: {fileID: 0}
   priority: 400
   requirements:

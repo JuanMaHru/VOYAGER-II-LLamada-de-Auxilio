@@ -16,7 +16,8 @@ MonoBehaviour:
   displayName: Un juego amistoso
   description: "Los alien\xEDgenas quedan fascinados con Squid Game e invitan a la
     humanidad a \"un juego amistoso\".\nLlegan con 456 buzos verdes y una mu\xF1eca
-    gigante. Nadie quiere jugar a \"luz roja, luz verde\"."
+    gigante. Nos ayudan con la condicion de que una vez por a\xF1o, se realicen los
+    squid games."
   image: {fileID: 0}
   priority: 400
   requirements:

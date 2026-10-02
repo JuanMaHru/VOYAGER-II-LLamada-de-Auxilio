@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: asadoinfinito
   displayName: Sobremesa infinita
-  description: "Los alien\xEDgenas aterrizan un domingo al mediod\xEDa y los reciben
-    con asado.\nA las seis de la tarde siguen en la sobremesa. La ayuda llega, pero
-    despu\xE9s del caf\xE9."
+  description: "Los alien\xEDgenas decidieron ayudarnos con nuestro problema. Pero
+    como condicion exigieron una tira de asado, seis choripanes con criolla y una
+    porcion de flan para cada uno con un cafesito. \n\nEstuvieron de sobremesa toda
+    la tarde, nos dieron la cura y se fueron. Prometieron volver a juntarse a comer
+    otro asado.\n"
   image: {fileID: 0}
   priority: 400
   requirements:

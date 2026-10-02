@@ -16,8 +16,7 @@ MonoBehaviour:
   displayName: "Conurbano gal\xE1ctico"
   description: "Los alien\xEDgenas siguen las indicaciones del mensaje para aterrizar
     en Laferrere. Terminan en Constituci\xF3n.\nSe toman el Roca, se bajan en cualquier
-    estaci\xF3n y nunca m\xE1s se supo de ellos.\nDejan una rese\xF1a en internet:
-    \"cinco estrellas, muy aut\xE9ntico\"."
+    estaci\xF3n y nunca m\xE1s se supo de ellos."
   image: {fileID: 0}
   priority: 600
   requirements:
