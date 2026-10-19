@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: bombonera
   displayName: La nave late
-  description: "La nave aterriza en la Bombonera. El estadio late tan fuerte que
-    el motor entra en resonancia.\nLos alien\xEDgenas se van mareados, pero felices,
-    y ahora son de Boca. La ayuda llega... cuando termine el partido."
+  description: "Los alienigenas quedaron fascinados con los highlights de Riquelme
+    con \nla cancion \"Toco y me voy\" de fondo. Prometieron ayudarnos, con la condicion
+    de que los llevemos a ver un partido de Boca en la bombonera.\n"
   image: {fileID: 0}
   priority: 400
   requirements:

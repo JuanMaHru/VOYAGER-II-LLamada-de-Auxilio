@@ -15,9 +15,9 @@ MonoBehaviour:
   id: monumental
   displayName: Socios vitalicios
   description: "La nave aterriza en el Monumental en pleno partido. Sin querer, los
-    alien\xEDgenas hacen la ola. 80.000 personas la siguen.\nSe sienten tan bienvenidos
-    que se quedan a vivir. Traen la cura de la pandemia... pero solo la reparten
-    en la platea."
+    alien\xEDgenas hacen la ola. 85.000 personas la siguen.\nSe sienten tan bienvenidos
+    que se quedan a vivir. Traen la cura de la pandemia... con la excepcion de que
+    no se la den a los bosteros que murieron en Madrid."
   image: {fileID: 0}
   priority: 400
   requirements:

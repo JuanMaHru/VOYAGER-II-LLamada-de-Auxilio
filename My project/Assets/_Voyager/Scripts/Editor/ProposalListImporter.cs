@@ -80,10 +80,11 @@ namespace Voyager.EditorTools
                 if (created > before) newProposals++;
             }
 
-            // ---------- Días: condición generada; puede haber varias de un país y ninguna de otro ----------
+            // ---------- Días: un sobre por país por tanda, y condición generada a partir de esos sobres ----------
             foreach (var d in config.days)
             {
-                d.distinctRegions = false;
+                d.proposalCount = regions.Count;
+                d.distinctRegions = true;
                 d.conditionMode = ConditionMode.Generated;
             }
 

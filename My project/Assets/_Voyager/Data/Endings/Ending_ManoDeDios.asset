@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: manodedios
   displayName: La Mano de Dios
-  description: "Los alien\xEDgenas ven el gol con la mano y lo declaran religi\xF3n
-    oficial.\nMandan la cura de la pandemia, pero la entregan con la mano. Nadie
-    se anima a cobrarles la falta."
+  description: "Los alien\xEDgenas ven el partido Argentina-Inglaterra del 86 y quedan
+    fascinados. Mandan la cura de la pandemia, pero la entregan con la mano. Nadie
+    se anima a cobrarles la falta.\n\n"
   image: {fileID: 0}
   priority: 400
   requirements:

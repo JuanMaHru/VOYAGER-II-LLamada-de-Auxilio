@@ -15,8 +15,9 @@ MonoBehaviour:
   id: planetaeeuu
   displayName: Bienvenidos al Planeta Estados Unidos
   description: "Los alien\xEDgenas revisan el mensaje y concluyen que la Tierra se
-    llama \"Estados Unidos\".\nMandan la respuesta a Washington y preguntan si el
-    resto del planeta son \"estados asociados\"."
+    llama \"Estados Unidos\". Visitan Nueva York y Los Angeles, quedan fascinados
+    con sus rascacielos y las playas. Pero les hace ruido el tama\xF1o de las ratas
+    y los zombies de fentanilo."
   image: {fileID: 0}
   priority: 200
   requirements:

@@ -15,8 +15,8 @@ MonoBehaviour:
   id: capitancarpincho
   displayName: El tratado del Carpincho
   description: "El carpincho les parece la criatura m\xE1s evolucionada del planeta:
-    tranquila, sociable y siempre en el agua.\nFirman el tratado de paz con los carpinchos
-    de Nordelta. A los humanos no nos invitan."
+    tranquila, sociable y siempre en el agua. Nos brindan ayuda con la pandemia,
+    con la condicion de que los dejemos vivir en paz en su habitat."
   image: {fileID: 0}
   priority: 400
   requirements:

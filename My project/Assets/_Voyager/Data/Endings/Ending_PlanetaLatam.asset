@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: planetalatam
   displayName: Fiesta en el planeta
-  description: "Los alien\xEDgenas concluyen que la Tierra es una fiesta permanente.\nLlegan
-    con ganas de bailar, se quedan de sobremesa y a los tres meses piden la ciudadan\xEDa."
+  description: "Los alien\xEDgenas concluyen que la Tierra es una fiesta permanente.
+    Escabian toda la semana en un tour por latam. Se volvieron cada uno con una paraguaya
+    y con mucho escabio en sangre.\n"
   image: {fileID: 0}
-  priority: 200
+  priority: 800
   requirements:
     mode: 0
     requirements:

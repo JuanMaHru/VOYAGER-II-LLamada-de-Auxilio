@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: mecciopenaldo
   displayName: "\xBFMecci o Penaldo?"
-  description: "Los alien\xEDgenas abren el debate: \xBFMecci o Penaldo?\nTres mil
-    a\xF1os despu\xE9s siguen discutiendo. La pandemia se termina sola mientras tanto."
+  description: "Los alien\xEDgenas abren el debate: \xBFPessi o Penaldo?\nTras un
+    largo debate, se elige a Penaldo como mejor jugador de futbol humano, ya que
+    Pessi es de otro planeta."
   image: {fileID: 0}
   priority: 600
   requirements:

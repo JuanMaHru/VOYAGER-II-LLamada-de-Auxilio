@@ -15,9 +15,8 @@ MonoBehaviour:
   id: especiepeligrosa
   displayName: Especie peligrosa
   description: "Los alien\xEDgenas abren la sonda y lo primero que encuentran es
-    a Adolfo Hituler.\nLa cierran. La vuelven a abrir, por si se equivocaron. No
-    se equivocaron.\nLa Tierra queda marcada como \"especie peligrosa\" en todos
-    los mapas de la galaxia. La ayuda no va a llegar."
+    a Adolfo Hituler.\nLa cierran y pegan la vuelta. La Tierra queda marcada como
+    \"especie peligrosa\" en todos los mapas de la galaxia. La ayuda no va a llegar."
   image: {fileID: 0}
   priority: 900
   requirements:

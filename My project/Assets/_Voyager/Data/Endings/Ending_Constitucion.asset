@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Voyager.EndingData
   id: constitucion
   displayName: "Hora pico en Constituci\xF3n"
-  description: "Los alien\xEDgenas eligen aterrizar en el lugar m\xE1s famoso del
-    mensaje: Constituci\xF3n, un lunes a las 18.\nTres d\xEDas despu\xE9s siguen
-    buscando el and\xE9n del Roca. Concluyen que la Tierra es un laberinto y se vuelven
-    a casa."
+  description: "Los alien\xEDgenas eligen aterrizar en el lugar propuesto por Latino
+    America, denominado Constitucion. Aterrizan en pleno centro y deciden bajarse
+    a comer un buen pancho. Al volver, quedaron varados tras darse cuenta que les
+    chorearon la nave."
   image: {fileID: 0}
   priority: 400
   requirements:
